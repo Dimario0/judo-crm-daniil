@@ -1,13 +1,256 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Judo CRM - Daniil Tulskii</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .belt-white { background: #ffffff; border: 2px solid #ddd; color: #333; }
+        .belt-white-yellow { background: linear-gradient(90deg, #fff 50%, #ffeb3b 50%); border: 2px solid #ddd; color: #333; }
+        .belt-yellow { background: #ffeb3b; border: 2px solid #fbc02d; color: #333; }
+        .belt-yellow-orange { background: linear-gradient(90deg, #ffeb3b 50%, #ff9800 50%); border: 2px solid #f57c00; color: #333; }
+        .belt-orange { background: #ff9800; border: 2px solid #e65100; color: #fff; }
+        .belt-orange-green { background: linear-gradient(90deg, #ff9800 50%, #4caf50 50%); border: 2px solid #2e7d32; color: #fff; }
+        .belt-green { background: #4caf50; border: 2px solid #2e7d32; color: #fff; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 50; }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
 
+    <div class="max-w-4xl mx-auto p-4 pb-20">
+        <div class="bg-white rounded-2xl shadow-sm p-6 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div id="beltDisplay" class="w-16 h-16 rounded-full flex items-center justify-center text-xs font-bold text-center border-4 shadow-inner belt-white">
+                    ПОЯС
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold">Tulskii Daniil</h1>
+                    <p class="text-gray-500 text-sm">2015 г.р. | Категории: U12, U14, U16</p>
+                </div>
+            </div>
+            <select id="beltSelector" class="bg-gray-100 border-none rounded-lg px-4 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="belt-white">Белый</option>
+                <option value="belt-white-yellow">Бело-желтый</option>
+                <option value="belt-yellow">Желтый</option>
+                <option value="belt-yellow-orange">Желто-оранжевый</option>
+                <option value="belt-orange">Оранжевый</option>
+                <option value="belt-orange-green">Оранжево-зеленый</option>
+                <option value="belt-green">Зеленый</option>
+            </select>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <p class="text-xs text-gray-500 uppercase font-bold mb-1">🥇 Золото</p>
+                <p id="goldCount" class="text-2xl font-black text-yellow-500">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <p class="text-xs text-gray-500 uppercase font-bold mb-1">🥈 Серебро</p>
+                <p id="silverCount" class="text-2xl font-black text-gray-400">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <p class="text-xs text-gray-500 uppercase font-bold mb-1">🥉 Бронза</p>
+                <p id="bronzeCount" class="text-2xl font-black text-orange-400">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center border-2 border-blue-100">
+                <p class="text-xs text-gray-500 uppercase font-bold mb-1">🌍 Инфо</p>
+                <p id="intlCount" class="text-2xl font-black text-blue-600">0</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-4 rounded-2xl shadow-sm">
+                <h3 class="text-sm font-bold mb-4 text-center">Эффективность (%)</h3>
+                <canvas id="winChart" height="200"></canvas>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm text-center flex flex-col justify-center">
+                <h3 class="text-sm font-bold mb-2">Всего турниров</h3>
+                <p id="totalTours" class="text-5xl font-black text-gray-800">0</p>
+                <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest">Статистика с 2025 г.</p>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold">Список миссий</h2>
+            <button onclick="toggleModal(true)" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg shadow-blue-200 active:scale-95 transition-transform text-sm">
+                ➕ Добавить турнир
+            </button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-[10px] font-bold">
+                        <tr>
+                            <th class="px-4 py-3">Дата</th>
+                            <th class="px-4 py-3">Турнир</th>
+                            <th class="px-4 py-3">Категория</th>
+                            <th class="px-4 py-3">Место</th>
+                            <th class="px-4 py-3 text-center">П/П</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tourTableBody" class="divide-y divide-gray-50 font-medium">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal px-4">
+        <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl">
+            <h2 class="text-xl font-bold mb-4 text-center">Новый результат</h2>
+            <div class="space-y-4">
+                <input type="text" id="formName" placeholder="Название турнира" class="w-full bg-gray-100 border-none rounded-xl p-3 outline-none">
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="date" id="formDate" class="bg-gray-100 border-none rounded-xl p-3 text-sm">
+                    <select id="formCountry" class="bg-gray-100 border-none rounded-xl p-3 text-sm">
+                        <option value="🇨🇿 Чехия">🇨🇿 Чехия</option>
+                        <option value="🇩🇪 Германия">🇩🇪 Германия</option>
+                        <option value="🇦🇹 Австрия">🇦🇹 Австрия</option>
+                        <option value="🇵🇱 Польша">🇵🇱 Польша</option>
+                        <option value="🇸🇰 Словакия">🇸🇰 Словакия</option>
+                        <option value="🌍 Другая">🌍 Другая</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="formCat" class="bg-gray-100 border-none rounded-xl p-3 text-sm">
+                        <option value="U12">U12</option>
+                        <option value="U14">U14</option>
+                        <option value="U16">U16</option>
+                    </select>
+                    <input type="text" id="formWeight" placeholder="Вес (кг)" class="bg-gray-100 border-none rounded-xl p-3 text-sm">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <select id="formResult" class="bg-gray-100 border-none rounded-xl p-3 text-[10px] font-bold">
+                        <option value="1">🥇 1 место</option>
+                        <option value="2">🥈 2 место</option>
+                        <option value="3">🥉 3 место</option>
+                        <option value="0">🥋 Участник</option>
+                    </select>
+                    <input type="number" id="formWins" placeholder="Побед" class="bg-gray-100 border-none rounded-xl p-3 text-sm">
+                    <input type="number" id="formLoss" placeholder="Пор." class="bg-gray-100 border-none rounded-xl p-3 text-sm">
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button onclick="toggleModal(false)" class="flex-1 py-3 text-gray-500 font-bold">Отмена</button>
+                <button onclick="saveTournament()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tournaments = JSON.parse(localStorage.getItem('judo_data')) || [
+            { id: 1, date: '2025-02-15', name: 'Velká Cena Prahy', country: '🇨🇿 Чехия', cat: 'U12', weight: '38', res: '1', w: 4, l: 0 },
+            { id: 2, date: '2025-03-10', name: 'Austrian Cup', country: '🇦🇹 Австрия', cat: 'U12', weight: '38', res: '3', w: 3, l: 1 },
+            { id: 3, date: '2025-05-20', name: 'Český Pohár Jablonec', country: '🇨🇿 Чехия', cat: 'U12', weight: '40', res: '2', w: 3, l: 1 }
+        ];
+
+        let currentBelt = localStorage.getItem('judo_belt') || 'belt-white';
+        let winChart;
+
+        function init() {
+            renderTable();
+            updateStats();
+            document.getElementById('beltSelector').value = currentBelt;
+            updateBeltVisuals(currentBelt);
+        }
+
+        function toggleModal(show) {
+            document.getElementById('modal').classList.toggle('active', show);
+        }
+
+        function updateBeltVisuals(beltClass) {
+            const display = document.getElementById('beltDisplay');
+            display.className = `w-16 h-16 rounded-full flex items-center justify-center text-[10px] font-black text-center border-4 shadow-inner ${beltClass}`;
+            display.innerHTML = beltClass.replace('belt-', '').toUpperCase().replace('-', '<br>');
+        }
+
+        document.getElementById('beltSelector').addEventListener('change', (e) => {
+            currentBelt = e.target.value;
+            localStorage.setItem('judo_belt', currentBelt);
+            updateBeltVisuals(currentBelt);
+        });
+
+        function saveTournament() {
+            const newTour = {
+                id: Date.now(),
+                date: document.getElementById('formDate').value || '2025-01-01',
+                name: document.getElementById('formName').value || 'Без названия',
+                country: document.getElementById('formCountry').value,
+                cat: document.getElementById('formCat').value,
+                weight: document.getElementById('formWeight').value,
+                res: document.getElementById('formResult').value,
+                w: parseInt(document.getElementById('formWins').value) || 0,
+                l: parseInt(document.getElementById('formLoss').value) || 0
+            };
+            tournaments.unshift(newTour);
+            localStorage.setItem('judo_data', JSON.stringify(tournaments));
+            renderTable();
+            updateStats();
+            toggleModal(false);
+        }
+
+        function renderTable() {
+            const body = document.getElementById('tourTableBody');
+            body.innerHTML = tournaments.map(t => `
+                <tr class="active:bg-gray-50">
+                    <td class="px-4 py-4 text-[10px] text-gray-400">${t.date.split('-').reverse().join('.')}</td>
+                    <td class="px-4 py-4">
+                        <div class="font-bold text-blue-900">${t.name}</div>
+                        <div class="text-[10px] text-gray-500">${t.country}</div>
+                    </td>
+                    <td class="px-4 py-4 text-xs font-bold text-gray-600">${t.cat} <span class="font-normal text-gray-400">${t.weight}кг</span></td>
+                    <td class="px-4 py-4">
+                        ${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}
+                    </td>
+                    <td class="px-4 py-4 text-center">
+                        <span class="text-green-600">${t.w}</span>/<span class="text-red-400">${t.l}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats() {
+            const gold = tournaments.filter(t => t.res === '1').length;
+            const silver = tournaments.filter(t => t.res === '2').length;
+            const bronze = tournaments.filter(t => t.res === '3').length;
+            const intl = tournaments.filter(t => t.country !== '🇨🇿 Чехия').length;
+            const totalWins = tournaments.reduce((acc, t) => acc + t.w, 0);
+            const totalLoss = tournaments.reduce((acc, t) => acc + t.l, 0);
+
+            document.getElementById('goldCount').innerText = gold;
+            document.getElementById('silverCount').innerText = silver;
+            document.getElementById('bronzeCount').innerText = bronze;
+            document.getElementById('intlCount').innerText = intl;
+            document.getElementById('totalTours').innerText = tournaments.length;
+
+            updateChart(totalWins, totalLoss);
+        }
+
+        function updateChart(w, l) {
+            const ctx = document.getElementById('winChart').getContext('2d');
+            if (winChart) winChart.destroy();
+            winChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Победы', 'Поражения'],
+                    datasets: [{
+                        data: [w, l],
+                        backgroundColor: ['#2563eb', '#f87171'],
+                        borderWidth: 0,
+                        cutout: '70%'
+                    }]
+                },
+                options: { plugins: { legend: { display: false } } }
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
