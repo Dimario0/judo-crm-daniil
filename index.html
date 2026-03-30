@@ -3,53 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Judo CRM Pro - Daniil Tulskii</title>
+    <title>Judo CRM PRO - Daniil Tulskii</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
-        body { font-family: 'Manrope', sans-serif; background-color: #f3f4f6; }
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
-        .belt-card { transition: all 0.3s ease; }
+        body { font-family: 'Manrope', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .belt-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        /* Пояса */
-        .belt-white { background: #fff; border: 4px solid #e5e7eb; color: #374151; }
-        .belt-white-yellow { background: linear-gradient(135deg, #fff 50%, #fde047 50%); border: 4px solid #e5e7eb; color: #374151; }
-        .belt-yellow { background: #fde047; border: 4px solid #eab308; color: #854d0e; }
-        .belt-yellow-orange { background: linear-gradient(135deg, #fde047 50%, #f97316 50%); border: 4px solid #eab308; color: #fff; }
+        /* Цвета поясов */
+        .belt-white { background: #fff; border: 4px solid #f1f5f9; color: #64748b; }
+        .belt-white-yellow { background: linear-gradient(135deg, #fff 50%, #fde047 50%); border: 4px solid #f1f5f9; color: #1e293b; }
+        .belt-yellow { background: #fde047; border: 4px solid #facc15; color: #854d0e; }
+        .belt-yellow-orange { background: linear-gradient(135deg, #fde047 50%, #f97316 50%); border: 4px solid #facc15; color: #fff; }
         .belt-orange { background: #f97316; border: 4px solid #ea580c; color: #fff; }
         .belt-orange-green { background: linear-gradient(135deg, #f97316 50%, #22c55e 50%); border: 4px solid #ea580c; color: #fff; }
         .belt-green { background: #22c55e; border: 4px solid #16a34a; color: #fff; }
 
-        .medal-gold { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); }
-        .medal-silver { background: linear-gradient(135deg, #9ca3af 0%, #4b5563 100%); }
-        .medal-bronze { background: linear-gradient(135deg, #d97706 0%, #7c2d12 100%); }
-        
-        .modal-enter { animation: modalFade 0.3s ease-out; }
-        @keyframes modalFade { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .stat-card { background: white; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 2rem; }
+        .medal-gold { background: linear-gradient(135deg, #fbbf24 0%, #b45309 100%); }
+        .medal-silver { background: linear-gradient(135deg, #cbd5e1 0%, #475569 100%); }
+        .medal-bronze { background: linear-gradient(135deg, #d97706 0%, #78350f 100%); }
     </style>
 </head>
-<body class="pb-12 text-slate-800">
+<body class="pb-10">
 
-    <div class="max-w-5xl mx-auto px-4 pt-6">
+    <div class="max-w-5xl mx-auto px-4 pt-8">
         
-        <header class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 bg-white p-6 rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white">
-            <div class="flex items-center gap-6">
-                <div id="beltIcon" class="belt-card w-24 h-24 rounded-3xl flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-0">
-                    <i class="fas fa-user-ninja text-3xl"></i>
+        <header class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50">
+            <div class="flex items-center gap-8">
+                <div id="beltIcon" class="belt-card w-28 h-28 rounded-[2rem] flex items-center justify-center shadow-2xl transform -rotate-3">
+                    <i class="fas fa-user-ninja text-4xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-3xl font-800 tracking-tight text-slate-900">Tulskii Daniil</h1>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded-full">2015 г.р.</span>
-                        <span id="currentBeltLabel" class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded-full uppercase">Белый пояс</span>
-                    </div>
+                    <h1 class="text-4xl font-800 tracking-tight">Tulskii Daniil</h1>
+                    <p class="text-slate-400 font-bold mt-1 uppercase tracking-widest text-xs">Judo Athlete | 2015 г.р.</p>
                 </div>
             </div>
-            <div class="flex flex-col items-end gap-2">
-                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Сменить пояс</label>
-                <select id="beltSelect" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-3 text-sm font-bold outline-none focus:border-blue-500 transition-all cursor-pointer shadow-sm">
+            <div class="bg-slate-50 p-4 rounded-3xl border border-slate-100 w-full md:w-auto text-center">
+                <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Текущий Кю</p>
+                <select id="beltSelect" class="bg-transparent font-black text-blue-600 outline-none text-lg cursor-pointer">
                     <option value="belt-white">Белый</option>
                     <option value="belt-white-yellow">Бело-желтый</option>
                     <option value="belt-yellow">Желтый</option>
@@ -61,231 +55,188 @@
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            
-            <div class="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="medal-gold p-6 rounded-[2rem] text-white shadow-lg shadow-yellow-500/20 flex flex-col items-center">
-                    <i class="fas fa-trophy text-2xl mb-2 opacity-50"></i>
-                    <span class="text-3xl font-black" id="stat-gold">0</span>
-                    <span class="text-[10px] font-bold uppercase opacity-80 mt-1">Золото</span>
-                </div>
-                <div class="medal-silver p-6 rounded-[2rem] text-white shadow-lg shadow-slate-500/20 flex flex-col items-center">
-                    <i class="fas fa-medal text-2xl mb-2 opacity-50"></i>
-                    <span class="text-3xl font-black" id="stat-silver">0</span>
-                    <span class="text-[10px] font-bold uppercase opacity-80 mt-1">Серебро</span>
-                </div>
-                <div class="medal-bronze p-6 rounded-[2rem] text-white shadow-lg shadow-orange-700/20 flex flex-col items-center">
-                    <i class="fas fa-award text-2xl mb-2 opacity-50"></i>
-                    <span class="text-3xl font-black" id="stat-bronze">0</span>
-                    <span class="text-[10px] font-bold uppercase opacity-80 mt-1">Бронза</span>
-                </div>
-                <div class="bg-blue-600 p-6 rounded-[2rem] text-white shadow-lg shadow-blue-500/20 flex flex-col items-center">
-                    <i class="fas fa-globe-europe text-2xl mb-2 opacity-50"></i>
-                    <span class="text-3xl font-black" id="stat-intl">0</span>
-                    <span class="text-[10px] font-bold uppercase opacity-80 mt-1">Европа</span>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="medal-gold p-6 rounded-[2rem] text-white shadow-lg shadow-amber-500/30 flex flex-col items-center">
+                <span class="text-4xl font-900" id="stat-gold">0</span>
+                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Золото</span>
+            </div>
+            <div class="medal-silver p-6 rounded-[2rem] text-white shadow-lg shadow-slate-500/30 flex flex-col items-center">
+                <span class="text-4xl font-900" id="stat-silver">0</span>
+                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Серебро</span>
+            </div>
+            <div class="medal-bronze p-6 rounded-[2rem] text-white shadow-lg shadow-orange-900/30 flex flex-col items-center">
+                <span class="text-4xl font-900" id="stat-bronze">0</span>
+                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Бронза</span>
+            </div>
+            <div class="bg-slate-900 p-6 rounded-[2rem] text-white shadow-lg flex flex-col items-center">
+                <span class="text-4xl font-900" id="stat-total">0</span>
+                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Турниров</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            <div class="lg:col-span-2 stat-card p-8">
+                <h3 class="text-lg font-800 mb-6 flex items-center gap-3">
+                    <i class="fas fa-chart-line text-blue-500"></i> Активность по годам
+                </h3>
+                <div class="h-48">
+                    <canvas id="yearlyChart"></canvas>
                 </div>
             </div>
-
-            <div class="bg-white p-6 rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white flex flex-col items-center justify-center">
-                <div class="relative w-32 h-32">
-                    <canvas id="winRateChart"></canvas>
+            <div class="stat-card p-8 flex flex-col items-center justify-center">
+                <h3 class="text-sm font-800 mb-6 uppercase text-slate-400">Эффективность</h3>
+                <div class="relative w-40 h-40">
+                    <canvas id="rateChart"></canvas>
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
-                        <span id="winRatePct" class="text-xl font-black text-slate-800 leading-none">0%</span>
-                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">Побед</span>
+                        <span id="rateLabel" class="text-3xl font-black italic">0%</span>
+                        <span class="text-[8px] font-black text-slate-400 uppercase">Побед</span>
                     </div>
                 </div>
-                <div class="mt-4 flex gap-4 text-[10px] font-bold uppercase">
-                    <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500"></span> <span id="stat-wins">0</span> побед</div>
-                    <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-400"></span> <span id="stat-loss">0</span> пор.</div>
-                </div>
             </div>
         </div>
 
-        <div class="bg-white p-6 rounded-[2rem] shadow-lg mb-8 border border-white">
-            <div class="flex justify-between items-end mb-3">
-                <div>
-                    <h3 class="text-sm font-800 text-slate-800 uppercase tracking-wider">Прогресс к черному поясу</h3>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Опыт накапливается с каждой победой</p>
-                </div>
-                <span id="progressLabel" class="text-blue-600 font-black text-lg italic">15%</span>
-            </div>
-            <div class="h-4 bg-slate-100 rounded-full overflow-hidden p-1 shadow-inner">
-                <div id="progressBar" class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full shadow-lg transition-all duration-1000" style="width: 15%"></div>
-            </div>
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+            <h2 class="text-2xl font-800">Журнал соревнований</h2>
+            <button onclick="openModal()" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-2xl font-800 shadow-xl shadow-blue-500/40 hover:bg-blue-700 transition-all active:scale-95">
+                <i class="fas fa-plus mr-2"></i> ДОБАВИТЬ ТУРНИР
+            </button>
         </div>
 
-        <section>
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                <h2 class="text-2xl font-800 text-slate-900 flex items-center gap-3">
-                    <span class="w-1.5 h-8 bg-blue-600 rounded-full"></span>
-                    История турниров
-                </h2>
-                <button onclick="openModal()" class="w-full sm:w-auto bg-slate-900 text-white px-8 py-4 rounded-2xl font-800 shadow-xl shadow-slate-900/20 active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-slate-800">
-                    <i class="fas fa-plus-circle"></i> Добавить результат
-                </button>
-            </div>
-
-            <div class="bg-white rounded-[2.5rem] shadow-xl shadow-blue-900/5 overflow-hidden border border-white">
-                <div class="overflow-x-auto text-left">
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50/50 border-b border-slate-100">
-                                <th class="p-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Турнир и Локация</th>
-                                <th class="p-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Дата</th>
-                                <th class="p-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Группа</th>
-                                <th class="p-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Результат</th>
-                                <th class="p-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Схватки</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tourBody" class="divide-y divide-slate-50">
-                            </tbody>
-                    </table>
+        <div class="stat-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-100">
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Турнир</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Дата</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Группа</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Место</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">П/П</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-50">
+                        </tbody>
+                </table>
+                <div id="emptyState" class="p-20 text-center text-slate-300 hidden">
+                    <i class="fas fa-clipboard-list text-6xl mb-4 opacity-20"></i>
+                    <p class="font-bold">Пока нет записей. Время начинать сезон!</p>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
-    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 shadow-2xl modal-enter">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-800">Добавить миссию</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-xl"><i class="fas fa-times"></i></button>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
+        <div class="bg-white w-full max-w-xl rounded-[2.5rem] p-8 shadow-2xl">
+            <h3 class="text-2xl font-800 mb-8 text-center">Новое соревнование</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div class="sm:col-span-2">
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Название турнира</label>
-                    <input id="f-name" type="text" placeholder="Velká Cena..." class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold focus:border-blue-500 transition-all outline-none">
+                    <input id="f-name" type="text" placeholder="Название турнира" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none focus:border-blue-500">
                 </div>
-                <div>
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Дата</label>
-                    <input id="f-date" type="date" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold text-sm outline-none">
-                </div>
-                <div>
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Страна</label>
-                    <select id="f-country" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold text-sm outline-none">
-                        <option value="🇨🇿 Чехия">🇨🇿 Чехия</option>
-                        <option value="🇩🇪 Германия">🇩🇪 Германия</option>
-                        <option value="🇦🇹 Австрия">🇦🇹 Австрия</option>
-                        <option value="🇵🇱 Польша">🇵🇱 Польша</option>
-                        <option value="🇸🇰 Словакия">🇸🇰 Словакия</option>
-                        <option value="🇭🇺 Венгрия">🇭🇺 Венгрия</option>
-                        <option value="🌍 Другое">🌍 Другое</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Возраст</label>
-                    <select id="f-age" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold text-sm outline-none">
-                        <option value="U12">U12</option>
-                        <option value="U14">U14</option>
-                        <option value="U16">U16</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Вес (кг)</label>
-                    <input id="f-weight" type="number" placeholder="38" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
-                </div>
-                <div>
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Результат</label>
-                    <select id="f-res" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold text-sm outline-none">
-                        <option value="1">🥇 1 место</option>
-                        <option value="2">🥈 2 место</option>
-                        <option value="3">🥉 3 место</option>
-                        <option value="0">🥋 Участник</option>
-                    </select>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Победы</label>
-                        <input id="f-win" type="number" value="0" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block ml-2">Пор.</label>
-                        <input id="f-loss" type="number" value="0" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
-                    </div>
+                <input id="f-date" type="date" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
+                <select id="f-country" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
+                    <option value="🇨🇿 Чехия">🇨🇿 Чехия</option>
+                    <option value="🇩🇪 Германия">🇩🇪 Германия</option>
+                    <option value="🇦🇹 Австрия">🇦🇹 Австрия</option>
+                    <option value="🇵🇱 Польша">🇵🇱 Польша</option>
+                    <option value="🇸🇰 Словакия">🇸🇰 Словакия</option>
+                    <option value="🌍 Другое">🌍 Другое</option>
+                </select>
+                <select id="f-age" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
+                    <option value="U12">U12</option>
+                    <option value="U14">U14</option>
+                    <option value="U16">U16</option>
+                </select>
+                <input id="f-weight" type="number" placeholder="Вес (кг)" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
+                <select id="f-res" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
+                    <option value="1">🥇 1 место</option>
+                    <option value="2">🥈 2 место</option>
+                    <option value="3">🥉 3 место</option>
+                    <option value="0">🥋 Участник</option>
+                </select>
+                <div class="grid grid-cols-2 gap-3">
+                    <input id="f-win" type="number" placeholder="Победы" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
+                    <input id="f-loss" type="number" placeholder="Пор." class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
                 </div>
             </div>
-            
-            <button onclick="save()" class="w-full mt-8 bg-blue-600 text-white p-5 rounded-2xl font-black text-lg shadow-xl shadow-blue-500/30 active:scale-95 transition-all">СОХРАНИТЬ РЕЗУЛЬТАТ</button>
+            <div class="flex gap-4 mt-10">
+                <button onclick="closeModal()" class="flex-1 font-bold text-slate-400">Отмена</button>
+                <button onclick="save()" class="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-black shadow-xl shadow-blue-500/20 active:scale-95 transition-all">СОХРАНИТЬ</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let data = JSON.parse(localStorage.getItem('judo_db_v2')) || [
-            { id: 1, name: 'Velká Cena Prahy', date: '2025-02-15', country: '🇨🇿 Чехия', age: 'U12', weight: '38', res: '1', win: 4, loss: 0 },
-            { id: 2, name: 'International Cup Wien', date: '2025-03-22', country: '🇦🇹 Австрия', age: 'U12', weight: '38', res: '3', win: 3, loss: 1 },
-            { id: 3, name: 'Český Pohár Jablonec', date: '2025-05-10', country: '🇨🇿 Чехия', age: 'U12', weight: '40', res: '2', win: 3, loss: 1 },
-            { id: 4, name: 'Saxony Open', date: '2025-06-05', country: '🇩🇪 Германия', age: 'U12', weight: '40', res: '0', win: 1, loss: 2 }
-        ];
-
-        let belt = localStorage.getItem('judo_belt_v2') || 'belt-white';
-        let chart;
+        // Версия v3 (Пустая база)
+        let db = JSON.parse(localStorage.getItem('judo_db_v3')) || [];
+        let belt = localStorage.getItem('judo_belt_v3') || 'belt-white';
+        let chartLine, chartPie;
 
         function updateUI() {
-            // Stats
-            const golds = data.filter(i => i.res == '1').length;
-            const silvers = data.filter(i => i.res == '2').length;
-            const bronzes = data.filter(i => i.res == '3').length;
-            const intls = data.filter(i => i.country !== '🇨🇿 Чехия').length;
-            const wins = data.reduce((s, i) => s + parseInt(i.win), 0);
-            const loss = data.reduce((s, i) => s + parseInt(i.loss), 0);
-            
-            document.getElementById('stat-gold').innerText = golds;
-            document.getElementById('stat-silver').innerText = silvers;
-            document.getElementById('stat-bronze').innerText = bronzes;
-            document.getElementById('stat-intl').innerText = intls;
-            document.getElementById('stat-wins').innerText = wins;
-            document.getElementById('stat-loss').innerText = loss;
+            if(db.length === 0) {
+                document.getElementById('emptyState').classList.remove('hidden');
+            } else {
+                document.getElementById('emptyState').classList.add('hidden');
+            }
 
-            // Chart
+            // Stats
+            document.getElementById('stat-gold').innerText = db.filter(i => i.res == '1').length;
+            document.getElementById('stat-silver').innerText = db.filter(i => i.res == '2').length;
+            document.getElementById('stat-bronze').innerText = db.filter(i => i.res == '3').length;
+            document.getElementById('stat-total').innerText = db.length;
+
+            const wins = db.reduce((s, i) => s + parseInt(i.win || 0), 0);
+            const loss = db.reduce((s, i) => s + parseInt(i.loss || 0), 0);
             const rate = wins + loss > 0 ? Math.round((wins / (wins + loss)) * 100) : 0;
-            document.getElementById('winRatePct').innerText = rate + '%';
-            
-            if(chart) chart.destroy();
-            chart = new Chart(document.getElementById('winRateChart'), {
-                type: 'doughnut',
+            document.getElementById('rateLabel').innerText = rate + '%';
+
+            // Yearly Logic
+            const years = {};
+            db.forEach(i => {
+                const y = i.date.split('-')[0];
+                years[y] = (years[y] || 0) + 1;
+            });
+            const sortedYears = Object.keys(years).sort();
+
+            // Charts
+            if(chartLine) chartLine.destroy();
+            chartLine = new Chart(document.getElementById('yearlyChart'), {
+                type: 'bar',
                 data: {
+                    labels: sortedYears.length ? sortedYears : ['2025'],
                     datasets: [{
-                        data: [wins, loss],
-                        backgroundColor: ['#3b82f6', '#f87171'],
-                        borderWidth: 0, cutout: '85%'
+                        label: 'Турниры',
+                        data: sortedYears.length ? sortedYears.map(y => years[y]) : [0],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 12,
+                        barThickness: 30
                     }]
                 },
-                options: { plugins: { legend: { display: false } }, events: [] }
+                options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
             });
 
-            // Progress
-            const progress = Math.min(wins * 2.5, 100);
-            document.getElementById('progressBar').style.width = progress + '%';
-            document.getElementById('progressLabel').innerText = Math.round(progress) + '%';
+            if(chartPie) chartPie.destroy();
+            chartPie = new Chart(document.getElementById('rateChart'), {
+                type: 'doughnut',
+                data: { datasets: [{ data: [wins, loss], backgroundColor: ['#3b82f6', '#f1f5f9'], borderWidth: 0, cutout: '85%' }] },
+                options: { events: [] }
+            });
 
             // Belt
             const icon = document.getElementById('beltIcon');
-            icon.className = `belt-card w-24 h-24 rounded-3xl flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-0 ${belt}`;
-            document.getElementById('currentBeltLabel').innerText = document.querySelector(`#beltSelect option[value="${belt}"]`).text + ' пояс';
+            icon.className = `belt-card w-28 h-28 rounded-[2rem] flex items-center justify-center shadow-2xl transform -rotate-3 ${belt}`;
 
             // Table
-            document.getElementById('tourBody').innerHTML = data.sort((a,b) => new Date(b.date) - new Date(a.date)).map(t => `
-                <tr class="hover:bg-slate-50/50 transition-colors">
+            document.getElementById('tableBody').innerHTML = db.sort((a,b) => new Date(b.date) - new Date(a.date)).map(t => `
+                <tr class="hover:bg-slate-50 transition-colors font-bold">
                     <td class="p-6">
-                        <div class="font-800 text-slate-900">${t.name}</div>
-                        <div class="text-[10px] font-bold text-slate-400 mt-0.5 uppercase tracking-tighter">${t.country}</div>
+                        <div class="text-slate-900">${t.name}</div>
+                        <div class="text-[10px] text-slate-400 uppercase">${t.country}</div>
                     </td>
+                    <td class="p-6 text-center text-xs text-slate-500">${t.date.split('-').reverse().join('.')}</td>
+                    <td class="p-6 text-center text-sm">${t.age} <span class="font-normal opacity-40">/ ${t.weight}кг</span></td>
+                    <td class="p-6 text-center text-2xl">${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}</td>
                     <td class="p-6 text-center">
-                        <div class="text-xs font-bold text-slate-500 bg-slate-100 py-1 rounded-lg">${t.date.split('-').reverse().join('.')}</div>
-                    </td>
-                    <td class="p-6 text-center font-800 text-slate-600 text-sm">
-                        ${t.age} <span class="text-slate-300 font-normal">/ ${t.weight}кг</span>
-                    </td>
-                    <td class="p-6 text-center">
-                        <span class="text-2xl">${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}</span>
-                    </td>
-                    <td class="p-6 text-center">
-                        <div class="flex items-center justify-center gap-1 font-black">
-                            <span class="text-blue-600">${t.win}</span>
-                            <span class="text-slate-200">|</span>
-                            <span class="text-red-400">${t.loss}</span>
-                        </div>
+                        <span class="text-blue-600">${t.win}</span><span class="text-slate-200 mx-1">|</span><span class="text-red-400">${t.loss}</span>
                     </td>
                 </tr>
             `).join('');
@@ -297,7 +248,7 @@
         function save() {
             const newItem = {
                 id: Date.now(),
-                name: document.getElementById('f-name').value || 'Новый турнир',
+                name: document.getElementById('f-name').value || 'Турнир',
                 date: document.getElementById('f-date').value || '2025-01-01',
                 country: document.getElementById('f-country').value,
                 age: document.getElementById('f-age').value,
@@ -306,15 +257,19 @@
                 win: document.getElementById('f-win').value || 0,
                 loss: document.getElementById('f-loss').value || 0
             };
-            data.push(newItem);
-            localStorage.setItem('judo_db_v2', JSON.stringify(data));
+            db.push(newItem);
+            localStorage.setItem('judo_db_v3', JSON.stringify(db));
             updateUI();
             closeModal();
+            // Clear inputs
+            document.getElementById('f-name').value = '';
+            document.getElementById('f-win').value = '';
+            document.getElementById('f-loss').value = '';
         }
 
         document.getElementById('beltSelect').addEventListener('change', (e) => {
             belt = e.target.value;
-            localStorage.setItem('judo_belt_v2', belt);
+            localStorage.setItem('judo_belt_v3', belt);
             updateUI();
         });
 
