@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Judo CRM Editor - Daniil Tulskii</title>
+    <title>Judo CRM Safe - Daniil Tulskii</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -11,7 +11,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
         body { font-family: 'Manrope', sans-serif; background-color: #f8fafc; color: #1e293b; }
         .belt-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
         .belt-white { background: #fff; border: 4px solid #f1f5f9; color: #64748b; }
         .belt-white-yellow { background: linear-gradient(135deg, #fff 50%, #fde047 50%); border: 4px solid #f1f5f9; color: #1e293b; }
         .belt-yellow { background: #fde047; border: 4px solid #facc15; color: #854d0e; }
@@ -19,14 +18,10 @@
         .belt-orange { background: #f97316; border: 4px solid #ea580c; color: #fff; }
         .belt-orange-green { background: linear-gradient(135deg, #f97316 50%, #22c55e 50%); border: 4px solid #ea580c; color: #fff; }
         .belt-green { background: #22c55e; border: 4px solid #16a34a; color: #fff; }
-
         .stat-card { background: white; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 2rem; }
-        .medal-gold { background: linear-gradient(135deg, #fbbf24 0%, #b45309 100%); }
-        .medal-silver { background: linear-gradient(135deg, #cbd5e1 0%, #475569 100%); }
-        .medal-bronze { background: linear-gradient(135deg, #d97706 0%, #78350f 100%); }
     </style>
 </head>
-<body class="pb-10">
+<body class="pb-20">
 
     <div class="max-w-5xl mx-auto px-4 pt-8">
         
@@ -36,109 +31,108 @@
                     <i class="fas fa-user-ninja text-4xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-4xl font-800 tracking-tight">Tulskii Daniil</h1>
-                    <p class="text-slate-400 font-bold mt-1 uppercase tracking-widest text-xs">Judo Athlete | 2015 г.р.</p>
+                    <h1 class="text-4xl font-800 tracking-tight italic">Daniil Tulskii</h1>
+                    <div class="flex gap-2 mt-2">
+                         <select id="beltSelect" class="bg-slate-100 font-black text-blue-600 rounded-lg px-3 py-1 text-xs uppercase outline-none">
+                            <option value="belt-white">Белый</option>
+                            <option value="belt-white-yellow">Бело-желтый</option>
+                            <option value="belt-yellow">Желтый</option>
+                            <option value="belt-yellow-orange">Желто-оранжевый</option>
+                            <option value="belt-orange">Оранжевый</option>
+                            <option value="belt-orange-green">Оранжево-зеленый</option>
+                            <option value="belt-green">Зеленый</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="bg-slate-50 p-4 rounded-3xl border border-slate-100 w-full md:w-auto text-center">
-                <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Текущий Кю</p>
-                <select id="beltSelect" class="bg-transparent font-black text-blue-600 outline-none text-lg cursor-pointer">
-                    <option value="belt-white">Белый</option>
-                    <option value="belt-white-yellow">Бело-желтый</option>
-                    <option value="belt-yellow">Желтый</option>
-                    <option value="belt-yellow-orange">Желто-оранжевый</option>
-                    <option value="belt-orange">Оранжевый</option>
-                    <option value="belt-orange-green">Оранжево-зеленый</option>
-                    <option value="belt-green">Зеленый</option>
-                </select>
+            
+            <div class="flex gap-2">
+                <button onclick="exportData()" class="p-4 bg-emerald-50 text-emerald-600 rounded-2xl hover:bg-emerald-100 transition-all shadow-sm" title="Скачать копию">
+                    <i class="fas fa-file-download text-xl"></i>
+                    <span class="block text-[8px] font-black uppercase mt-1">Экспорт</span>
+                </button>
+                <label class="p-4 bg-amber-50 text-amber-600 rounded-2xl hover:bg-amber-100 transition-all shadow-sm cursor-pointer text-center" title="Загрузить из файла">
+                    <i class="fas fa-file-upload text-xl"></i>
+                    <span class="block text-[8px] font-black uppercase mt-1">Импорт</span>
+                    <input type="file" id="importFile" class="hidden" onchange="importData(event)">
+                </label>
             </div>
         </header>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="medal-gold p-6 rounded-[2rem] text-white shadow-lg flex flex-col items-center">
-                <span class="text-4xl font-900" id="stat-gold">0</span>
-                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Золото</span>
+            <div class="bg-gradient-to-br from-amber-400 to-amber-600 p-6 rounded-[2rem] text-white shadow-lg shadow-amber-200">
+                <span class="text-3xl font-900 block" id="stat-gold">0</span>
+                <span class="text-[10px] font-black uppercase opacity-70">Золото</span>
             </div>
-            <div class="medal-silver p-6 rounded-[2rem] text-white shadow-lg flex flex-col items-center">
-                <span class="text-4xl font-900" id="stat-silver">0</span>
-                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Серебро</span>
+            <div class="bg-gradient-to-br from-slate-300 to-slate-500 p-6 rounded-[2rem] text-white shadow-lg shadow-slate-200">
+                <span class="text-3xl font-900 block" id="stat-silver">0</span>
+                <span class="text-[10px] font-black uppercase opacity-70">Серебро</span>
             </div>
-            <div class="medal-bronze p-6 rounded-[2rem] text-white shadow-lg flex flex-col items-center">
-                <span class="text-4xl font-900" id="stat-bronze">0</span>
-                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Бронза</span>
+            <div class="bg-gradient-to-br from-orange-500 to-orange-700 p-6 rounded-[2rem] text-white shadow-lg shadow-orange-200">
+                <span class="text-3xl font-900 block" id="stat-bronze">0</span>
+                <span class="text-[10px] font-black uppercase opacity-70">Бронза</span>
             </div>
-            <div class="bg-slate-900 p-6 rounded-[2rem] text-white shadow-lg flex flex-col items-center">
-                <span class="text-4xl font-900" id="stat-total">0</span>
-                <span class="text-[10px] font-black uppercase opacity-80 mt-1">Всего</span>
+            <div class="bg-slate-900 p-6 rounded-[2rem] text-white shadow-lg">
+                <span class="text-3xl font-900 block" id="stat-total">0</span>
+                <span class="text-[10px] font-black uppercase opacity-50">Турниров</span>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
             <div class="lg:col-span-2 stat-card p-8">
-                <h3 class="text-lg font-800 mb-6 uppercase text-slate-400 text-xs tracking-widest">Активность по годам</h3>
+                <h3 class="text-xs font-black uppercase text-slate-400 mb-6 tracking-widest">Активность по годам</h3>
                 <div class="h-48"><canvas id="yearlyChart"></canvas></div>
             </div>
-            <div class="stat-card p-8 flex flex-col items-center justify-center text-center">
-                <div class="relative w-40 h-40">
-                    <canvas id="rateChart"></canvas>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                        <span id="rateLabel" class="text-3xl font-black italic">0%</span>
-                        <span class="text-[8px] font-black text-slate-400 uppercase">Win Rate</span>
-                    </div>
+            <div class="stat-card p-8 flex flex-col items-center justify-center relative">
+                <canvas id="rateChart" class="w-full"></canvas>
+                <div class="absolute inset-0 flex flex-col items-center justify-center mt-6">
+                    <span id="rateLabel" class="text-3xl font-black italic">0%</span>
+                    <span class="text-[8px] font-black text-slate-400 uppercase">Побед</span>
                 </div>
             </div>
         </div>
 
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-800">Журнал турниров</h2>
+            <h2 class="text-2xl font-800">Список побед</h2>
             <button onclick="openModal()" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-800 shadow-xl shadow-blue-500/30 active:scale-95 transition-all">
-                <i class="fas fa-plus mr-2"></i> ДОБАВИТЬ
+                <i class="fas fa-plus mr-2"></i> ДОБАВИТЬ ТУРНИР
             </button>
         </div>
 
         <div class="stat-card overflow-hidden">
-            <div class="overflow-x-auto text-left">
-                <table class="w-full">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
                     <thead>
-                        <tr class="bg-slate-50 border-b border-slate-100">
-                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Турнир</th>
+                        <tr class="bg-slate-50/50 border-b border-slate-100">
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Турнир / Дата</th>
                             <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Группа</th>
-                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Место</th>
-                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Схватки</th>
-                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Действия</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Результат</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">П/П</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Действие</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="divide-y divide-slate-50"></tbody>
                 </table>
-                <div id="emptyState" class="p-20 text-center text-slate-300">
-                    <i class="fas fa-ghost text-5xl mb-4 opacity-20"></i>
-                    <p class="font-bold">Список пуст. Добавьте первый турнир!</p>
-                </div>
             </div>
         </div>
     </div>
 
-    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
+    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
         <div class="bg-white w-full max-w-xl rounded-[2.5rem] p-8 shadow-2xl">
-            <h3 id="modalTitle" class="text-2xl font-800 mb-8 text-center text-slate-900">Новый результат</h3>
+            <h3 id="modalTitle" class="text-2xl font-800 mb-8 text-center text-slate-900 italic">Новый результат</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="sm:col-span-2">
                     <input id="f-name" type="text" placeholder="Название турнира" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none focus:border-blue-500 transition-all">
                 </div>
                 <input id="f-date" type="date" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
                 <select id="f-country" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
-                    <option value="🇨🇿 Чехия">🇨🇿 Чехия</option>
-                    <option value="🇩🇪 Германия">🇩🇪 Германия</option>
-                    <option value="🇦🇹 Австрия">🇦🇹 Австрия</option>
-                    <option value="🇵🇱 Польша">🇵🇱 Польша</option>
-                    <option value="🇸🇰 Словакия">🇸🇰 Словакия</option>
-                    <option value="🌍 Другое">🌍 Другое</option>
+                    <option value="🇨🇿 Чехия">🇨🇿 Чехия</option><option value="🇩🇪 Германия">🇩🇪 Германия</option><option value="🇦🇹 Австрия">🇦🇹 Австрия</option><option value="🇵🇱 Польша">🇵🇱 Польша</option><option value="🇸🇰 Словакия">🇸🇰 Словакия</option><option value="🌍 Другое">🌍 Другое</option>
                 </select>
-                <select id="f-age" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none text-sm">
+                <select id="f-age" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
                     <option value="U12">U12</option><option value="U14">U14</option><option value="U16">U16</option>
                 </select>
                 <input id="f-weight" type="number" placeholder="Вес (кг)" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
-                <select id="f-res" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none text-sm">
+                <select id="f-res" class="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 font-bold outline-none">
                     <option value="1">🥇 1 место</option><option value="2">🥈 2 место</option><option value="3">🥉 3 место</option><option value="0">🥋 Участник</option>
                 </select>
                 <div class="grid grid-cols-2 gap-2">
@@ -148,18 +142,17 @@
             </div>
             <div class="flex gap-4 mt-8">
                 <button onclick="closeModal()" class="flex-1 font-bold text-slate-400">Отмена</button>
-                <button onclick="save()" class="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-black shadow-lg shadow-blue-500/20 active:scale-95 transition-all">СОХРАНИТЬ</button>
+                <button onclick="save()" class="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-black shadow-xl shadow-blue-500/20 active:scale-95 transition-all uppercase tracking-tighter">Сохранить</button>
             </div>
         </div>
     </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('judo_db_v4')) || [];
-        let belt = localStorage.getItem('judo_belt_v4') || 'belt-white';
+        let db = JSON.parse(localStorage.getItem('judo_db_final')) || [];
+        let belt = localStorage.getItem('judo_belt_final') || 'belt-white';
         let chartLine, chartPie, editingId = null;
 
         function updateUI() {
-            document.getElementById('emptyState').classList.toggle('hidden', db.length > 0);
             document.getElementById('stat-gold').innerText = db.filter(i => i.res == '1').length;
             document.getElementById('stat-silver').innerText = db.filter(i => i.res == '2').length;
             document.getElementById('stat-bronze').innerText = db.filter(i => i.res == '3').length;
@@ -183,35 +176,32 @@
             // Pie Chart
             if(chartPie) chartPie.destroy();
             chartPie = new Chart(document.getElementById('rateChart'), {
-                type: 'doughnut', data: { datasets: [{ data: [wins, loss], backgroundColor: ['#3b82f6', '#f1f5f9'], borderWidth: 0, cutout: '85%' }] },
+                type: 'doughnut', data: { datasets: [{ data: [wins, loss], backgroundColor: ['#3b82f6', '#f1f5f9'], borderWidth: 0, cutout: '80%' }] },
                 options: { events: [] }
             });
 
-            // Belt
+            // Belt Visual
             document.getElementById('beltIcon').className = `belt-card w-28 h-28 rounded-[2rem] flex items-center justify-center shadow-2xl transform -rotate-3 ${belt}`;
 
-            // Table
+            // Render Table
             document.getElementById('tableBody').innerHTML = db.sort((a,b) => new Date(b.date) - new Date(a.date)).map(t => `
                 <tr class="hover:bg-slate-50 transition-colors">
                     <td class="p-6">
                         <div class="font-bold text-slate-900">${t.name}</div>
-                        <div class="text-[10px] text-slate-400 uppercase">${t.date.split('-').reverse().join('.')} | ${t.country}</div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">${t.date.split('-').reverse().join('.')} | ${t.country}</div>
                     </td>
-                    <td class="p-6 text-center font-bold text-slate-600 text-sm">${t.age} <span class="opacity-30">/ ${t.weight}кг</span></td>
+                    <td class="p-6 text-center font-bold text-slate-500 text-sm">${t.age} <span class="opacity-30">/ ${t.weight}кг</span></td>
                     <td class="p-6 text-center text-2xl">${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}</td>
                     <td class="p-6 text-center font-black">
                         <span class="text-blue-600">${t.win}</span><span class="mx-1 opacity-10">|</span><span class="text-red-400">${t.loss}</span>
                     </td>
                     <td class="p-6 text-right">
-                        <button onclick="editItem(${t.id})" class="text-blue-400 hover:text-blue-600 mr-4"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteItem(${t.id})" class="text-red-200 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                        <button onclick="editItem(${t.id})" class="text-blue-400 hover:text-blue-600 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteItem(${t.id})" class="text-red-200 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                     </td>
                 </tr>
             `).join('');
         }
-
-        function openModal() { editingId = null; document.getElementById('modalTitle').innerText = "Новый результат"; document.getElementById('modal').classList.remove('hidden'); }
-        function closeModal() { document.getElementById('modal').classList.add('hidden'); resetForm(); }
 
         function save() {
             const item = {
@@ -231,8 +221,45 @@
             } else {
                 db.push(item);
             }
-            localStorage.setItem('judo_db_v4', JSON.stringify(db));
+            localStorage.setItem('judo_db_final', JSON.stringify(db));
             updateUI(); closeModal();
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify({ db, belt });
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `judo_daniil_backup_${new Date().toLocaleDateString()}.json`;
+            link.click();
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const imported = JSON.parse(e.target.result);
+                if (imported.db && imported.belt) {
+                    db = imported.db;
+                    belt = imported.belt;
+                    localStorage.setItem('judo_db_final', JSON.stringify(db));
+                    localStorage.setItem('judo_belt_final', belt);
+                    document.getElementById('beltSelect').value = belt;
+                    updateUI();
+                    alert('Данные успешно восстановлены!');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function deleteItem(id) {
+            if(confirm('Удалить эту запись навсегда?')) {
+                db = db.filter(i => i.id !== id);
+                localStorage.setItem('judo_db_final', JSON.stringify(db));
+                updateUI();
+            }
         }
 
         function editItem(id) {
@@ -246,24 +273,15 @@
             document.getElementById('f-res').value = item.res;
             document.getElementById('f-win').value = item.win;
             document.getElementById('f-loss').value = item.loss;
-            document.getElementById('modalTitle').innerText = "Изменить результат";
+            document.getElementById('modalTitle').innerText = "Изменить запись";
             document.getElementById('modal').classList.remove('hidden');
         }
 
-        function deleteItem(id) {
-            if(confirm('Удалить этот турнир?')) {
-                db = db.filter(i => i.id !== id);
-                localStorage.setItem('judo_db_v4', JSON.stringify(db));
-                updateUI();
-            }
-        }
-
-        function resetForm() {
-            ['f-name','f-date','f-weight','f-win','f-loss'].forEach(id => document.getElementById(id).value = '');
-        }
-
+        function openModal() { editingId = null; document.getElementById('modalTitle').innerText = "Новый результат"; document.getElementById('modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); resetForm(); }
+        function resetForm() { ['f-name','f-date','f-weight','f-win','f-loss'].forEach(id => document.getElementById(id).value = ''); }
         document.getElementById('beltSelect').addEventListener('change', (e) => {
-            belt = e.target.value; localStorage.setItem('judo_belt_v4', belt); updateUI();
+            belt = e.target.value; localStorage.setItem('judo_belt_final', belt); updateUI();
         });
 
         document.getElementById('beltSelect').value = belt;
