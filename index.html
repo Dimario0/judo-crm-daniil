@@ -3,265 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Judo Super Champion - Даниил</title>
+    <title>ПУТЬ ЧЕМПИОНА: Даниил Тульский</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Montserrat:wght@400;600;800&display=swap');
         
+        :root { --main-blue: #1e40af; }
         body { 
             font-family: 'Montserrat', sans-serif; 
-            background: #f0f4f8;
-            color: #1e293b;
-            overflow-x: hidden;
+            background: #0f172a; /* Темный игровой фон */
+            color: #f8fafc;
+            user-select: none;
         }
+
+        .judo-title { font-family: 'Exo 2', sans-serif; text-transform: uppercase; letter-spacing: -1px; }
 
         /* Пояса IJF */
-        .belt-white { background: #fff; border: 4px solid #e2e8f0; color: #64748b; }
-        .belt-white-yellow { background: linear-gradient(90deg, #fff 50%, #fde047 50%); border: 4px solid #e2e8f0; }
-        .belt-yellow { background: #fde047; border: 4px solid #facc15; }
-        .belt-yellow-orange { background: linear-gradient(90deg, #fde047 50%, #f97316 50%); border: 4px solid #facc15; }
-        .belt-orange { background: #f97316; border: 4px solid #ea580c; color: #fff; }
-        .belt-orange-green { background: linear-gradient(90deg, #f97316 50%, #22c55e 50%); border: 4px solid #ea580c; }
-        .belt-green { background: #22c55e; border: 4px solid #16a34a; color: #fff; }
+        .belt-white { background: #fff; color: #1e293b; box-shadow: 0 0 20px #fff; }
+        .belt-white-yellow { background: linear-gradient(90deg, #fff 50%, #fde047 50%); color: #1e293b; box-shadow: 0 0 20px rgba(253, 224, 71, 0.5); }
+        .belt-yellow { background: #fde047; color: #854d0e; box-shadow: 0 0 20px #fde047; }
+        .belt-yellow-orange { background: linear-gradient(90deg, #fde047 50%, #f97316 50%); color: #fff; }
+        .belt-orange { background: #f97316; color: #fff; box-shadow: 0 0 20px #f97316; }
+        .belt-orange-green { background: linear-gradient(90deg, #f97316 50%, #22c55e 50%); color: #fff; }
+        .belt-green { background: #22c55e; color: #fff; box-shadow: 0 0 20px #22c55e; }
 
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 2.5rem;
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);
-            border: 2px solid white;
+        .glass { 
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 2rem;
         }
 
-        .stat-value { transition: all 1s ease-out; }
-        
-        .progress-bar-fill {
-            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .xp-bar { background: rgba(255,255,255,0.1); border-radius: 1rem; overflow: hidden; height: 12px; }
+        .xp-fill { 
+            height: 100%; 
+            background: linear-gradient(90deg, #3b82f6, #60a5fa); 
+            transition: width 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px #3b82f6;
         }
 
-        .tour-card {
-            transition: all 0.3s ease;
-        }
-        .tour-card:active { transform: scale(0.98); background: #f8fafc; }
+        .stat-card { transition: all 0.3s ease; }
+        .stat-card:active { transform: scale(0.95); }
 
-        @keyframes pulse-blue {
-            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        .tour-item { 
+            background: rgba(255,255,255,0.03); 
+            border-left: 5px solid transparent;
+            transition: all 0.2s;
         }
-        .btn-add { animation: pulse-blue 2s infinite; }
+        .tour-item.gold { border-left-color: #fbbf24; background: rgba(251, 191, 36, 0.05); }
+
+        /* Специальные кнопки для iPad */
+        .btn-game { 
+            background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
+            box-shadow: 0 4px 0 #1d4ed8, 0 10px 20px rgba(29, 78, 216, 0.3);
+            transition: all 0.1s;
+        }
+        .btn-game:active { transform: translateY(4px); box-shadow: 0 0 0 #1d4ed8; }
+
+        input, select { background: #1e293b !important; color: white !important; border: 1px solid #334155 !important; }
     </style>
 </head>
-<body class="antialiased pb-20">
+<body class="pb-10">
 
-    <div class="max-w-4xl mx-auto px-4 pt-6">
+    <div class="max-w-3xl mx-auto px-4 pt-6">
         
-        <header class="glass-card p-8 mb-8 animate__animated animate__fadeInDown">
-            <div class="flex items-center gap-6 mb-6">
-                <div id="beltBox" class="w-24 h-24 rounded-[2rem] shadow-xl flex items-center justify-center text-4xl transform hover:rotate-12 transition-transform duration-500">
-                    <i class="fas fa-medal text-white/50"></i>
+        <header class="glass p-6 mb-6 animate__animated animate__fadeInDown">
+            <div class="flex items-center gap-6 mb-4">
+                <div id="beltHero" class="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl shadow-2xl transition-all duration-700">
+                    🥋
                 </div>
                 <div class="flex-1">
-                    <h1 class="text-3xl font-900 tracking-tight italic text-slate-900 uppercase">Даниил Тульский</h1>
+                    <h1 class="judo-title text-2xl font-900 tracking-tighter italic">ДАНИИЛ ТУЛЬСКИЙ</h1>
                     <div class="flex items-center gap-2 mt-1">
-                        <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">Будущий чемпион</span>
-                        <select id="beltSelect" class="bg-transparent text-[10px] font-bold text-slate-400 uppercase outline-none cursor-pointer">
-                            <option value="belt-white">Белый пояс</option>
+                        <span id="rankBadge" class="bg-blue-600/20 text-blue-400 text-[9px] font-black px-2 py-0.5 rounded-full border border-blue-500/30 uppercase tracking-widest">Белый пояс</span>
+                        <select id="beltSelect" class="bg-transparent text-[9px] font-bold text-slate-500 uppercase outline-none cursor-pointer">
+                            <option value="belt-white">Белый</option>
                             <option value="belt-white-yellow">Бело-желтый</option>
-                            <option value="belt-yellow">Желтый пояс</option>
+                            <option value="belt-yellow">Желтый</option>
                             <option value="belt-yellow-orange">Желто-оранжевый</option>
-                            <option value="belt-orange">Оранжевый пояс</option>
+                            <option value="belt-orange">Оранжевый</option>
                             <option value="belt-orange-green">Оранжево-зеленый</option>
-                            <option value="belt-green">Зеленый пояс</option>
+                            <option value="belt-green">Зеленый</option>
                         </select>
                     </div>
                 </div>
+                <div class="text-center">
+                    <p class="text-[8px] font-black text-slate-500 uppercase mb-1 tracking-tighter italic">Уровень</p>
+                    <div id="levelCircle" class="w-10 h-10 rounded-full border-2 border-blue-500 flex items-center justify-center font-900 text-blue-400">1</div>
+                </div>
             </div>
 
-            <div class="space-y-2">
-                <div class="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <span>Путь к Черному поясу</span>
-                    <span id="progressPct">0%</span>
+            <div class="relative pt-2">
+                <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-slate-400">
+                    <span id="rankText">Смелый Новичок</span>
+                    <span id="xpText">0 / 100 XP</span>
                 </div>
-                <div class="h-4 bg-slate-100 rounded-full overflow-hidden border border-slate-50 p-1">
-                    <div id="progressBar" class="progress-bar-fill h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-lg" style="width: 0%"></div>
+                <div class="xp-bar">
+                    <div id="xpFill" class="xp-fill" style="width: 0%"></div>
                 </div>
             </div>
         </header>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass-card p-6 flex flex-col items-center animate__animated animate__zoomIn animate__delay-1s">
-                <div class="text-4xl mb-1">🥇</div>
-                <span class="text-4xl font-900 text-amber-500 stat-value" id="s-gold">0</span>
-                <span class="text-[9px] font-black uppercase text-slate-400">Золото</span>
+            <div class="glass p-5 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.1s">
+                <div class="text-3xl mb-1">🥇</div>
+                <span class="text-3xl font-900 judo-title text-amber-400" id="s-gold">0</span>
+                <span class="text-[8px] font-black uppercase text-slate-500 tracking-widest">Золото</span>
             </div>
-            <div class="glass-card p-6 flex flex-col items-center animate__animated animate__zoomIn animate__delay-1s" style="animation-delay: 1.1s">
-                <div class="text-4xl mb-1">🥈</div>
-                <span class="text-4xl font-900 text-slate-400 stat-value" id="s-silver">0</span>
-                <span class="text-[9px] font-black uppercase text-slate-400">Серебро</span>
+            <div class="glass p-5 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.2s">
+                <div class="text-3xl mb-1">🥈</div>
+                <span class="text-3xl font-900 judo-title text-slate-300" id="s-silver">0</span>
+                <span class="text-[8px] font-black uppercase text-slate-500 tracking-widest">Серебро</span>
             </div>
-            <div class="glass-card p-6 flex flex-col items-center animate__animated animate__zoomIn animate__delay-1s" style="animation-delay: 1.2s">
-                <div class="text-4xl mb-1">🥉</div>
-                <span class="text-4xl font-900 text-orange-400 stat-value" id="s-bronze">0</span>
-                <span class="text-[9px] font-black uppercase text-slate-400">Бронза</span>
+            <div class="glass p-5 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.3s">
+                <div class="text-3xl mb-1">🥉</div>
+                <span class="text-3xl font-900 judo-title text-orange-400" id="s-bronze">0</span>
+                <span class="text-[8px] font-black uppercase text-slate-500 tracking-widest">Бронза</span>
             </div>
-            <div class="glass-card p-6 flex flex-col items-center bg-slate-900 animate__animated animate__zoomIn animate__delay-1s" style="animation-delay: 1.3s">
-                <div class="text-4xl mb-1">🌍</div>
-                <span class="text-4xl font-900 text-white stat-value" id="s-total">0</span>
-                <span class="text-[9px] font-black uppercase text-slate-500">Турниров</span>
+            <div class="glass p-5 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.4s">
+                <div class="text-3xl mb-1">🔥</div>
+                <span class="text-3xl font-900 judo-title text-blue-400" id="s-total">0</span>
+                <span class="text-[8px] font-black uppercase text-slate-500 tracking-widest">Турниров</span>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            <div class="glass-card p-8">
-                <h3 class="text-[10px] font-black uppercase text-slate-400 mb-6 tracking-widest italic">Активность</h3>
-                <canvas id="yChart" height="150"></canvas>
+            <div class="glass p-6">
+                <h3 class="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Статистика по годам</h3>
+                <canvas id="chartYear" height="140"></canvas>
             </div>
-            <div class="glass-card p-8 flex flex-col items-center justify-center relative">
-                <canvas id="pChart" class="max-w-[150px]"></canvas>
-                <div class="absolute inset-0 flex flex-col items-center justify-center mt-6">
-                    <span id="rateVal" class="text-3xl font-900 italic">0%</span>
-                    <span class="text-[8px] font-black text-slate-300 uppercase">Побед</span>
+            <div class="glass p-6 flex flex-col items-center justify-center relative">
+                <canvas id="chartWin" class="max-w-[130px]"></canvas>
+                <div class="absolute flex flex-col items-center justify-center mt-4">
+                    <span id="winRate" class="text-2xl font-900 judo-title italic">0%</span>
+                    <span class="text-[7px] font-black text-slate-500 uppercase">Эффект</span>
                 </div>
             </div>
         </div>
 
-        <div class="flex justify-between items-end mb-6 px-4">
-            <h2 class="text-2xl font-900 italic uppercase tracking-tighter text-slate-800">История побед</h2>
-            <button onclick="openModal()" class="btn-add bg-blue-600 text-white px-8 py-4 rounded-2xl font-900 text-xs tracking-widest uppercase shadow-xl">
-                Добавить медаль
-            </button>
-        </div>
+        <button onclick="openModal()" class="btn-game w-full p-5 rounded-3xl mb-8 flex items-center justify-center gap-4 animate__animated animate__pulse animate__infinite">
+            <i class="fas fa-plus-circle text-2xl"></i>
+            <span class="font-900 judo-title tracking-wider">ДОБАВИТЬ НОВУЮ ПОБЕДУ</span>
+        </button>
 
-        <div id="tourList" class="space-y-4">
+        <h2 class="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-6 px-4 italic">История достижений</h2>
+        <div id="tourList" class="space-y-4 px-1">
             </div>
 
-        <div id="noData" class="glass-card p-20 text-center text-slate-300 hidden">
-            <i class="fas fa-award text-6xl mb-4 opacity-10"></i>
-            <p class="font-bold uppercase text-xs tracking-widest">Твой путь начинается здесь!</p>
+        <div id="noData" class="text-center p-20 opacity-20 hidden">
+            <i class="fas fa-scroll text-6xl mb-4"></i>
+            <p class="font-bold">Ждем первого результата!</p>
         </div>
     </div>
 
-    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
-        <div class="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl animate__animated animate__backInUp">
-            <h3 class="text-2xl font-900 mb-8 italic text-center">Новый результат</h3>
-            <div class="grid grid-cols-1 gap-4">
-                <input id="f-name" type="text" placeholder="Название турнира" class="w-full bg-slate-50 rounded-2xl p-4 font-bold outline-none border-2 border-transparent focus:border-blue-500">
+    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
+        <div class="glass w-full max-w-md p-8 border-2 border-blue-500/30 animate__animated animate__jackInTheBox">
+            <h3 class="text-xl font-900 judo-title mb-6 italic text-center text-blue-400">Внести результат Шиаи</h3>
+            <div class="space-y-4">
+                <input id="f-name" type="text" placeholder="Название турнира" class="w-full rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-blue-500">
                 <div class="grid grid-cols-2 gap-4">
-                    <input id="f-date" type="date" class="bg-slate-50 rounded-2xl p-4 font-bold outline-none">
-                    <select id="f-country" class="bg-slate-50 rounded-2xl p-4 font-bold outline-none">
+                    <input id="f-date" type="date" class="rounded-2xl p-4 font-bold outline-none">
+                    <select id="f-country" class="rounded-2xl p-4 font-bold outline-none">
                         <option value="🇨🇿 Чехия">🇨🇿 Чехия</option><option value="🇩🇪 Германия">🇩🇪 Германия</option><option value="🇦🇹 Австрия">🇦🇹 Австрия</option><option value="🌍 Другая">🌍 Другая</option>
                     </select>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <select id="f-age" class="bg-slate-50 rounded-2xl p-4 font-bold outline-none"><option>U12</option><option>U14</option></select>
-                    <input id="f-weight" type="number" placeholder="Вес (кг)" class="bg-slate-50 rounded-2xl p-4 font-bold outline-none">
+                    <select id="f-age" class="rounded-2xl p-4 font-bold outline-none"><option>U12</option><option>U14</option><option>U16</option></select>
+                    <input id="f-weight" type="number" placeholder="Вес (кг)" class="rounded-2xl p-4 font-bold outline-none">
                 </div>
-                <select id="f-res" class="bg-slate-100 rounded-2xl p-4 font-900 text-center outline-none">
+                <select id="f-res" class="w-full rounded-2xl p-4 font-900 text-center outline-none bg-blue-900/50">
                     <option value="1">🥇 1 МЕСТО (ЗОЛОТО)</option>
                     <option value="2">🥈 2 МЕСТО (СЕРЕБРО)</option>
                     <option value="3">🥉 3 МЕСТО (БРОНЗА)</option>
                     <option value="0">🥋 УЧАСТНИК</option>
                 </select>
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="text-center"><p class="text-[9px] font-black uppercase text-slate-400 mb-1">Побед</p><input id="f-win" type="number" value="0" class="w-full bg-slate-50 rounded-2xl p-4 font-black text-center text-blue-600"></div>
-                    <div class="text-center"><p class="text-[9px] font-black uppercase text-slate-400 mb-1">Пор.</p><input id="f-loss" type="number" value="0" class="w-full bg-slate-50 rounded-2xl p-4 font-black text-center text-red-400"></div>
+                    <div class="text-center">
+                        <p class="text-[8px] font-black uppercase text-slate-500 mb-1">Победы</p>
+                        <input id="f-win" type="number" value="0" class="w-full rounded-2xl p-4 font-900 text-center text-blue-400">
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[8px] font-black uppercase text-slate-500 mb-1">Поражения</p>
+                        <input id="f-loss" type="number" value="0" class="w-full rounded-2xl p-4 font-900 text-center text-red-400">
+                    </div>
                 </div>
             </div>
             <div class="flex gap-4 mt-8">
-                <button onclick="closeModal()" class="flex-1 font-bold text-slate-400">Отмена</button>
-                <button onclick="save()" class="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-900 shadow-xl shadow-blue-200">СОХРАНИТЬ!</button>
+                <button onclick="closeModal()" class="flex-1 font-bold text-slate-500">ОТМЕНА</button>
+                <button onclick="save()" class="flex-[2] btn-game text-white p-4 rounded-2xl font-900 judo-title">СОХРАНИТЬ!</button>
             </div>
         </div>
     </div>
 
+    <div class="fixed bottom-4 left-4 flex gap-2 opacity-30 hover:opacity-100 transition-opacity">
+        <button onclick="exportData()" class="text-[8px] font-bold uppercase p-2 border border-white/20 rounded">Backup</button>
+        <label class="text-[8px] font-bold uppercase p-2 border border-white/20 rounded cursor-pointer">Load<input type="file" class="hidden" onchange="importData(event)"></label>
+    </div>
+
     <script>
-        // БАЗА ДАННЫХ И МИГРАЦИЯ
-        function loadDB() {
-            const keys = ['judo_final_v6', 'judo_master_db_color', 'judo_ultra_db'];
-            let data = JSON.parse(localStorage.getItem('judo_kids_v7')) || [];
-            if(data.length === 0) {
+        // --- МОЩНЫЙ МИГРАТОР ДАННЫХ ---
+        function getSuperDB() {
+            const keys = ['judo_kids_v7', 'judo_final_v6', 'judo_master_db_color', 'judo_ultra_db', 'judo_master_db', 'judo_db_final', 'judo_pro_v5'];
+            let master = JSON.parse(localStorage.getItem('judo_champion_final_db')) || [];
+            
+            if (master.length === 0) {
                 keys.forEach(k => {
                     const old = localStorage.getItem(k);
-                    if(old) { try { data = [...data, ...(Array.isArray(JSON.parse(old)) ? JSON.parse(old) : JSON.parse(old).db || [])]; } catch(e){} }
+                    if (old) {
+                        try {
+                            const parsed = JSON.parse(old);
+                            const arr = Array.isArray(parsed) ? parsed : (parsed.db || []);
+                            master = [...master, ...arr];
+                        } catch(e) {}
+                    }
                 });
-                const unique = Array.from(new Map(data.map(i => [i.id, i])).values());
-                localStorage.setItem('judo_kids_v7', JSON.stringify(unique));
+                const unique = Array.from(new Map(master.map(i => [i.id || Date.now() + Math.random(), i])).values());
+                localStorage.setItem('judo_champion_final_db', JSON.stringify(unique));
                 return unique;
             }
-            return data;
+            return master;
         }
 
-        let db = loadDB();
-        let belt = localStorage.getItem('judo_belt_v7') || 'belt-white';
-        let cY, cP, editId = null;
+        let db = getSuperDB();
+        let belt = localStorage.getItem('judo_belt_final_v7') || 'belt-white';
+        let chartY, chartP, editId = null;
 
         function updateUI() {
             document.getElementById('noData').classList.toggle('hidden', db.length > 0);
             db.sort((a,b) => new Date(b.date) - new Date(a.date));
 
-            // Статистика с анимацией чисел
+            // Stats
             const g = db.filter(i => i.res == '1').length;
             const s = db.filter(i => i.res == '2').length;
             const b = db.filter(i => i.res == '3').length;
             const wins = db.reduce((acc, i) => acc + parseInt(i.win || 0), 0);
             const loss = db.reduce((acc, i) => acc + parseInt(i.loss || 0), 0);
 
-            animateNumber('s-gold', g);
-            animateNumber('s-silver', s);
-            animateNumber('s-bronze', b);
-            animateNumber('s-total', db.length);
+            document.getElementById('s-gold').innerText = g;
+            document.getElementById('s-silver').innerText = s;
+            document.getElementById('s-bronze').innerText = b;
+            document.getElementById('s-total').innerText = db.length;
+
+            // XP & Level Logic
+            const xp = (db.length * 10) + (wins * 5) + (g * 20);
+            const level = Math.floor(xp / 100) + 1;
+            const currentXP = xp % 100;
+            
+            document.getElementById('levelCircle').innerText = level;
+            document.getElementById('xpFill').style.width = currentXP + '%';
+            document.getElementById('xpText').innerText = `${currentXP} / 100 XP`;
+            
+            // Ranks
+            const ranks = ["Смелый Новичок", "Усердный Ученик", "Гроза Татами", "Мастер Броска", "Чемпион Клуба", "Легенда Дзюдо"];
+            const rankIdx = Math.min(Math.floor(level / 2), ranks.length - 1);
+            document.getElementById('rankText').innerText = ranks[rankIdx];
 
             // Win Rate
             const rate = (wins + loss) > 0 ? Math.round((wins / (wins + loss)) * 100) : 0;
-            document.getElementById('rateVal').innerText = rate + '%';
+            document.getElementById('winRate').innerText = rate + '%';
 
-            // Прогресс бар (опыт)
-            const exp = Math.min((db.length * 5) + (wins * 2) + (g * 10), 100);
-            document.getElementById('progressBar').style.width = exp + '%';
-            document.getElementById('progressPct').innerText = Math.round(exp) + '%';
+            // Visuals
+            const hero = document.getElementById('beltHero');
+            hero.className = `w-20 h-20 rounded-3xl flex items-center justify-center text-4xl shadow-2xl transition-all duration-700 ${belt}`;
+            document.getElementById('rankBadge').innerText = document.querySelector(`#beltSelect option[value="${belt}"]`).text;
 
-            // Графики
-            const years = {};
-            db.forEach(i => { const y = i.date.split('-')[0]; years[y] = (years[y] || 0) + 1; });
-            const sY = Object.keys(years).sort();
-            if(cY) cY.destroy();
-            cY = new Chart(document.getElementById('yChart'), {
+            // Chart Activity
+            const yrs = {}; db.forEach(i => { const y = i.date.split('-')[0]; yrs[y] = (yrs[y] || 0) + 1; });
+            const sY = Object.keys(yrs).sort();
+            if(chartY) chartY.destroy();
+            chartY = new Chart(document.getElementById('chartYear'), {
                 type: 'bar',
-                data: { labels: sY.length ? sY : ['2025'], datasets: [{ data: sY.map(y => years[y]), backgroundColor: '#3b82f6', borderRadius: 10 }] },
-                options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } }
+                data: { labels: sY.length ? sY : ['2025'], datasets: [{ data: sY.map(y => yrs[y]), backgroundColor: '#3b82f6', borderRadius: 10 }] },
+                options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { color: '#64748b', font: { weight: 'bold' } } } } }
             });
 
-            if(cP) cP.destroy();
-            cP = new Chart(document.getElementById('pChart'), {
+            if(chartP) chartP.destroy();
+            chartP = new Chart(document.getElementById('chartWin'), {
                 type: 'doughnut',
-                data: { datasets: [{ data: [wins, loss || 0.1], backgroundColor: ['#3b82f6', '#f1f5f9'], borderWidth: 0, cutout: '80%' }] },
+                data: { datasets: [{ data: [wins, loss || 0.1], backgroundColor: ['#3b82f6', 'rgba(255,255,255,0.05)'], borderWidth: 0, cutout: '85%' }] },
                 options: { events: [], plugins: { tooltip: { enabled: false } } }
             });
 
-            // Пояс
-            document.getElementById('beltBox').className = `w-24 h-24 rounded-[2rem] shadow-xl flex items-center justify-center text-4xl transform hover:rotate-12 transition-all duration-700 ${belt}`;
-
-            // Карточки Турниров
+            // List Render
             document.getElementById('tourList').innerHTML = db.map(t => `
-                <div class="glass-card p-6 tour-card animate__animated animate__fadeInUp flex justify-between items-center">
+                <div class="glass p-5 flex justify-between items-center tour-item ${t.res == '1' ? 'gold animate__animated animate__pulse' : ''}">
                     <div class="flex items-center gap-4">
                         <div class="text-3xl">${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}</div>
                         <div>
-                            <div class="font-900 text-slate-900 leading-tight uppercase italic text-sm">${t.name}</div>
-                            <div class="text-[9px] font-black text-slate-400 mt-1 uppercase">${t.date.split('-').reverse().join('.')} | ${t.country}</div>
+                            <div class="font-900 judo-title italic text-sm text-white">${t.name}</div>
+                            <div class="text-[9px] font-black text-slate-500 uppercase tracking-tighter mt-1">${t.date.split('-').reverse().join('.')} | ${t.country}</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="text-center px-4 border-l border-slate-100">
-                            <p class="text-xs font-900 text-blue-600">${t.win}/${t.loss}</p>
-                            <p class="text-[7px] font-black text-slate-300 uppercase">П/П</p>
+                        <div class="text-center px-3 border-r border-white/5">
+                            <p class="text-xs font-900 text-blue-400 leading-none">${t.win}</p>
+                            <p class="text-[7px] font-black text-slate-600 uppercase">Поб.</p>
                         </div>
-                        <div class="flex flex-col gap-1">
-                            <button onclick="editItem(${t.id})" class="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center"><i class="fas fa-pen text-[10px]"></i></button>
-                            <button onclick="deleteItem(${t.id})" class="w-8 h-8 rounded-lg bg-red-50 text-red-300 flex items-center justify-center"><i class="fas fa-trash text-[10px]"></i></button>
+                        <div class="flex gap-2">
+                            <button onclick="edit(${t.id})" class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center"><i class="fas fa-edit text-xs"></i></button>
+                            <button onclick="del(${t.id})" class="w-10 h-10 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center"><i class="fas fa-trash text-xs"></i></button>
                         </div>
                     </div>
                 </div>
@@ -269,52 +313,31 @@
         }
 
         function save() {
-            const res = document.getElementById('f-res').value;
+            const r = document.getElementById('f-res').value;
             const item = {
                 id: editId || Date.now(),
-                name: document.getElementById('f-name').value || 'Новая победа',
+                name: document.getElementById('f-name').value || 'Турнир Шиаи',
                 date: document.getElementById('f-date').value || new Date().toISOString().split('T')[0],
                 country: document.getElementById('f-country').value,
                 age: document.getElementById('f-age').value,
                 weight: document.getElementById('f-weight').value || '0',
-                res: res,
+                res: r,
                 win: parseInt(document.getElementById('f-win').value) || 0,
                 loss: parseInt(document.getElementById('f-loss').value) || 0
             };
             
-            if(!editId && res == '1') launchConfetti(); // САЛЮТ ДЛЯ ЗОЛОТА!
+            if(!editId && r == '1') {
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#fbbf24', '#3b82f6', '#ffffff'] });
+            }
 
             if(editId) { const idx = db.findIndex(i => i.id === editId); db[idx] = item; }
             else { db.push(item); }
             
-            localStorage.setItem('judo_kids_v7', JSON.stringify(db));
+            localStorage.setItem('judo_champion_final_db', JSON.stringify(db));
             updateUI(); closeModal();
         }
 
-        function launchConfetti() {
-            var duration = 3 * 1000;
-            var end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#facc15', '#3b82f6'] });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#facc15', '#3b82f6'] });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
-            }());
-        }
-
-        function animateNumber(id, val) {
-            const obj = document.getElementById(id);
-            let start = 0;
-            const dur = 1000;
-            const step = (timestamp) => {
-                if (!start) start = timestamp;
-                const progress = Math.min((timestamp - start) / dur, 1);
-                obj.innerText = Math.floor(progress * val);
-                if (progress < 1) window.requestAnimationFrame(step);
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        function editItem(id) {
+        function edit(id) {
             editId = id; const t = db.find(i => i.id === id);
             document.getElementById('f-name').value = t.name;
             document.getElementById('f-date').value = t.date;
@@ -327,25 +350,25 @@
             document.getElementById('modal').classList.remove('hidden');
         }
 
-        function deleteItem(id) { if(confirm('Удалить эту медаль?')) { db = db.filter(i => i.id !== id); localStorage.setItem('judo_kids_v7', JSON.stringify(db)); updateUI(); } }
+        function del(id) { if(confirm('Удалить эту победу?')) { db = db.filter(i => i.id !== id); localStorage.setItem('judo_champion_final_db', JSON.stringify(db)); updateUI(); } }
         function openModal() { editId = null; document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+        
         function exportData() {
-            const blob = new Blob([JSON.stringify({ db, belt })], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url; a.download = `путь_чемпиона_даниил.json`; a.click();
+            const b = new Blob([JSON.stringify({ db, belt })], { type: "application/json" });
+            const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `даниил_дзюдо_про.json`; a.click();
         }
         function importData(e) {
-            const reader = new FileReader(); reader.onload = (ev) => {
+            const r = new FileReader(); r.onload = (ev) => {
                 const d = JSON.parse(ev.target.result); db = d.db; belt = d.belt;
-                localStorage.setItem('judo_kids_v7', JSON.stringify(db));
-                localStorage.setItem('judo_belt_v7', belt);
+                localStorage.setItem('judo_champion_final_db', JSON.stringify(db));
+                localStorage.setItem('judo_belt_final_v7', belt);
                 document.getElementById('beltSelect').value = belt; updateUI();
-            }; reader.readAsText(e.target.files[0]);
+            }; r.readAsText(e.target.files[0]);
         }
+
         document.getElementById('beltSelect').addEventListener('change', (e) => {
-            belt = e.target.value; localStorage.setItem('judo_belt_v7', belt); updateUI();
+            belt = e.target.value; localStorage.setItem('judo_belt_final_v7', belt); updateUI();
         });
         document.getElementById('beltSelect').value = belt;
         updateUI();
