@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ПУТЬ ЧЕМПИОНА 10.0</title>
+    <title>ПУТЬ ЧЕМПИОНА 10.3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -19,10 +19,21 @@
         @keyframes moveGradient { 0% { background-position: 100% 0%; } 100% { background-position: -100% 0%; } }
         .btn-game { background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%); box-shadow: 0 6px 0 #1d4ed8, 0 12px 24px rgba(29, 78, 216, 0.4); transition: all 0.1s; border: none; outline: none; }
         .btn-game:active { transform: translateY(4px); box-shadow: 0 0 0 #1d4ed8; }
+        
+        /* ВСЕ ПОЯСА С ПОЛОВИНКАМИ */
         .belt-white { background: #fff; color: #1e293b; box-shadow: 0 0 20px #fff; }
+        .belt-white-yellow { background: linear-gradient(90deg, #fff 50%, #fde047 50%); color: #1e293b; }
         .belt-yellow { background: #fde047; color: #854d0e; box-shadow: 0 0 20px #fde047; }
+        .belt-yellow-orange { background: linear-gradient(90deg, #fde047 50%, #f97316 50%); color: #fff; }
         .belt-orange { background: #f97316; color: #fff; box-shadow: 0 0 20px #f97316; }
+        .belt-orange-green { background: linear-gradient(90deg, #f97316 50%, #22c55e 50%); color: #fff; }
         .belt-green { background: #22c55e; color: #fff; box-shadow: 0 0 20px #22c55e; }
+        .belt-green-blue { background: linear-gradient(90deg, #22c55e 50%, #2563eb 50%); color: #fff; }
+        .belt-blue { background: #2563eb; color: #fff; box-shadow: 0 0 20px #2563eb; }
+        .belt-blue-brown { background: linear-gradient(90deg, #2563eb 50%, #78350f 50%); color: #fff; }
+        .belt-brown { background: #78350f; color: #fff; box-shadow: 0 0 20px #78350f; }
+        .belt-black { background: #000; color: #fbbf24; border: 2px solid #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
+
         input, select, textarea { background: #1e293b !important; color: white !important; border: 1px solid #334155 !important; border-radius: 1rem !important; }
         .ipad-btn { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
         .sync-active { animation: pulse 2s infinite; }
@@ -46,9 +57,20 @@
                 <div class="flex-1">
                     <h1 class="judo-title text-3xl font-900 tracking-tighter italic uppercase">Даниил Тульский</h1>
                     <div class="flex items-center gap-3 mt-2">
-                        <span id="rankBadge" class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest italic">Белый пояс</span>
+                        <span id="rankBadge" class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest italic text-center min-w-[140px]">Пояс</span>
                         <select id="beltSelect" class="bg-transparent text-[10px] font-bold text-slate-500 uppercase outline-none cursor-pointer hover:text-white">
-                            <option value="belt-white">Белый</option><option value="belt-yellow">Желтый</option><option value="belt-orange">Оранжевый</option><option value="belt-green">Зеленый</option>
+                            <option value="belt-white">Белый</option>
+                            <option value="belt-white-yellow">Бело-желтый</option>
+                            <option value="belt-yellow">Желтый</option>
+                            <option value="belt-yellow-orange">Желто-оранжевый</option>
+                            <option value="belt-orange">Оранжевый</option>
+                            <option value="belt-orange-green">Оранжево-зеленый</option>
+                            <option value="belt-green">Зеленый</option>
+                            <option value="belt-green-blue">Зелено-синий</option>
+                            <option value="belt-blue">Синий</option>
+                            <option value="belt-blue-brown">Сине-коричневый</option>
+                            <option value="belt-brown">Коричневый</option>
+                            <option value="belt-black">Черный (Мастер)</option>
                         </select>
                     </div>
                 </div>
@@ -112,7 +134,7 @@
                     <div class="text-center"><p class="text-[8px] font-black uppercase text-slate-500 mb-2">Победы</p><input id="f-win" type="number" value="0" class="w-full p-5 font-900 text-center text-blue-400"></div>
                     <div class="text-center"><p class="text-[8px] font-black uppercase text-slate-500 mb-2">Поражения</p><input id="f-loss" type="number" value="0" class="w-full p-5 font-900 text-center text-red-400"></div>
                 </div>
-                <textarea id="f-note" placeholder="Заметки о приемах (Токуи-ваза)..." rows="2" class="w-full p-4 font-bold text-sm"></textarea>
+                <textarea id="f-note" placeholder="Заметки..." rows="2" class="w-full p-4 font-bold text-sm"></textarea>
             </div>
             <div class="flex gap-6 mt-10">
                 <button onclick="closeModal()" class="flex-1 font-black text-slate-500 uppercase text-xs tracking-widest">Отмена</button>
@@ -122,7 +144,6 @@
     </div>
 
     <script>
-        // === КОНФИГУРАЦИЯ ОБЛАКА ===
         const CLOUD_URL = "https://script.google.com/macros/s/AKfycbyTjkM75gt-kKsGTNwT5ea22ekB45-ZMwKf8v2XYmFP2jdbm_lUxaYEf7QQRpe4xZ8y/exec";
         
         let db = JSON.parse(localStorage.getItem('judo_v10_local')) || [];
@@ -133,7 +154,7 @@
             const dot = document.getElementById('syncDot');
             const txt = document.getElementById('syncText');
             dot.className = "w-2 h-2 rounded-full bg-yellow-500 sync-active";
-            txt.innerText = isPush ? "Отправка в облако..." : "Загрузка из облака...";
+            txt.innerText = isPush ? "Отправка..." : "Загрузка...";
 
             try {
                 if (isPush) {
@@ -147,11 +168,11 @@
                     }
                 }
                 dot.className = "w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]";
-                txt.innerText = "Облако: Синхронизировано";
+                txt.innerText = "Облако: ОК";
                 updateUI();
             } catch (e) {
                 dot.className = "w-2 h-2 rounded-full bg-red-500";
-                txt.innerText = "Ошибка сети (Локальный режим)";
+                txt.innerText = "Оффлайн режим";
                 console.error(e);
             }
         }
@@ -179,7 +200,8 @@
             document.getElementById('winRate').innerText = (wins + loss) > 0 ? Math.round((wins/(wins+loss))*100)+'%' : '0%';
             
             document.getElementById('beltHero').className = `w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-4xl shadow-2xl transition-all duration-700 ${belt}`;
-            document.getElementById('rankBadge').innerText = document.querySelector(`#beltSelect option[value="${belt}"]`).text;
+            const bOpt = document.querySelector(`#beltSelect option[value="${belt}"]`);
+            document.getElementById('rankBadge').innerText = bOpt ? bOpt.text : 'Пояс';
 
             const yrs = {}; db.forEach(i => { const y = i.date.split('-')[0]; yrs[y] = (yrs[y] || 0) + 1; });
             const sY = Object.keys(yrs).sort();
@@ -245,13 +267,12 @@
             document.getElementById('f-note').value = t.note || ''; document.getElementById('modal').classList.remove('hidden');
         }
 
-        async function del(id) { if(confirm('Удалить трофей?')) { db = db.filter(i => i.id !== id); localStorage.setItem('judo_v10_local', JSON.stringify(db)); updateUI(); await syncWithCloud(true); } }
+        async function del(id) { if(confirm('Удалить?')) { db = db.filter(i => i.id !== id); localStorage.setItem('judo_v10_local', JSON.stringify(db)); updateUI(); await syncWithCloud(true); } }
         function openModal() { editId = null; document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
         document.getElementById('beltSelect').addEventListener('change', (e) => { belt = e.target.value; localStorage.setItem('judo_belt_v10', belt); updateUI(); });
         document.getElementById('beltSelect').value = belt;
         
-        // СТАРТ
         syncWithCloud();
     </script>
 </body>
