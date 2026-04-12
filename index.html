@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ПУТЬ ЧЕМПИОНА 10.6</title>
+    <title>ПУТЬ ЧЕМПИОНА 10.8</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@900&family=Montserrat:wght@400;600;800&display=swap');
         body { font-family: 'Montserrat', sans-serif; background: #0f172a; color: #f8fafc; -webkit-tap-highlight-color: transparent; }
@@ -19,43 +20,43 @@
         .btn-game { background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%); box-shadow: 0 6px 0 #1d4ed8, 0 12px 24px rgba(29, 78, 216, 0.4); transition: all 0.1s; border: none; }
         .btn-game:active { transform: translateY(4px); box-shadow: 0 0 0 #1d4ed8; }
         
-        /* ЦВЕТА ПОЯСОВ */
-        .belt-white { background: #fff; color: #1e293b; }
+        /* Цвета поясов (Full Collection) */
+        .belt-white { background: #fff; color: #1e293b; box-shadow: 0 0 20px #fff; }
         .belt-white-yellow { background: linear-gradient(90deg, #fff 50%, #fde047 50%); color: #1e293b; }
-        .belt-yellow { background: #fde047; color: #854d0e; }
+        .belt-yellow { background: #fde047; color: #854d0e; box-shadow: 0 0 20px #fde047; }
         .belt-yellow-orange { background: linear-gradient(90deg, #fde047 50%, #f97316 50%); color: #fff; }
-        .belt-orange { background: #f97316; color: #fff; }
+        .belt-orange { background: #f97316; color: #fff; box-shadow: 0 0 20px #f97316; }
         .belt-orange-green { background: linear-gradient(90deg, #f97316 50%, #22c55e 50%); color: #fff; }
-        .belt-green { background: #22c55e; color: #fff; }
+        .belt-green { background: #22c55e; color: #fff; box-shadow: 0 0 20px #22c55e; }
         .belt-green-blue { background: linear-gradient(90deg, #22c55e 50%, #2563eb 50%); color: #fff; }
-        .belt-blue { background: #2563eb; color: #fff; }
+        .belt-blue { background: #2563eb; color: #fff; box-shadow: 0 0 20px #2563eb; }
         .belt-blue-brown { background: linear-gradient(90deg, #2563eb 50%, #78350f 50%); color: #fff; }
-        .belt-brown { background: #78350f; color: #fff; }
-        .belt-black { background: #000; color: #fbbf24; border: 2px solid #fbbf24; }
+        .belt-brown { background: #78350f; color: #fff; box-shadow: 0 0 20px #78350f; }
+        .belt-black { background: #000; color: #fbbf24; border: 2px solid #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
 
         .ipad-btn { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
         input, select, textarea { background: #1e293b !important; color: white !important; border: 1px solid #334155 !important; border-radius: 1rem !important; }
     </style>
 </head>
-<body class="pb-10">
+<body class="antialiased pb-10">
 
     <div class="max-w-3xl mx-auto px-4 pt-4">
         
         <div class="flex justify-center mb-4">
-            <div id="cloudBadge" class="px-4 py-1.5 glass flex items-center gap-2 rounded-full border-white/10">
+            <div id="cloudBadge" class="px-4 py-1.5 glass flex items-center gap-2 rounded-full border-blue-500/20">
                 <div id="syncDot" class="w-2 h-2 rounded-full bg-slate-500"></div>
-                <span id="syncText" class="text-[9px] font-black uppercase tracking-widest text-slate-400 italic">Связь...</span>
+                <span id="syncText" class="text-[9px] font-black uppercase tracking-widest text-slate-400 italic">Связь с облаком...</span>
             </div>
         </div>
 
-        <header class="glass p-8 mb-6">
+        <header class="glass p-8 mb-6 animate__animated animate__fadeInDown">
             <div class="flex items-center gap-6 mb-6">
-                <div id="beltHero" class="w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-4xl shadow-2xl">🥋</div>
+                <div id="beltHero" class="w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-4xl shadow-2xl transition-all duration-700">🥋</div>
                 <div class="flex-1">
                     <h1 class="judo-title text-3xl font-900 tracking-tighter italic uppercase">Даниил Тульский</h1>
                     <div class="flex items-center gap-3 mt-2">
-                        <span id="rankBadge" class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest min-w-[140px] text-center italic">Пояс</span>
-                        <select id="beltSelect" class="bg-transparent text-[10px] font-bold text-slate-500 uppercase outline-none cursor-pointer">
+                        <span id="rankBadge" class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest italic text-center min-w-[140px]">Пояс</span>
+                        <select id="beltSelect" class="bg-transparent text-[10px] font-bold text-slate-500 uppercase outline-none cursor-pointer hover:text-white">
                             <option value="belt-white">Белый</option><option value="belt-white-yellow">Бело-желтый</option>
                             <option value="belt-yellow">Желтый</option><option value="belt-yellow-orange">Желто-оранжевый</option>
                             <option value="belt-orange">Оранжевый</option><option value="belt-orange-green">Оранжево-зеленый</option>
@@ -66,13 +67,13 @@
                     </div>
                 </div>
                 <div class="text-center bg-white/5 p-3 rounded-3xl border border-white/10">
-                    <p class="text-[8px] font-black text-slate-500 uppercase mb-1 italic">LVL</p>
+                    <p class="text-[8px] font-black text-slate-500 uppercase mb-1 tracking-tighter italic">LVL</p>
                     <div id="levelCircle" class="w-12 h-12 rounded-full border-2 border-blue-500 flex items-center justify-center font-900 text-blue-400 text-xl">1</div>
                 </div>
             </div>
             <div class="relative">
                 <div class="flex justify-between text-[11px] font-black uppercase tracking-widest mb-3 text-slate-400">
-                    <span id="rankText" class="text-blue-400 font-bold">Смелый Новичок</span>
+                    <span id="rankText" class="text-blue-400 font-bold italic">Смелый Новичок</span>
                     <span id="xpText">0 / 100 XP</span>
                 </div>
                 <div class="xp-bar"><div id="xpFill" class="xp-fill" style="width: 0%"></div></div>
@@ -80,10 +81,10 @@
         </header>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass p-6 flex flex-col items-center"><div class="text-4xl mb-2">🥇</div><span class="text-4xl font-900 judo-title text-amber-400" id="s-gold">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Золото</span></div>
-            <div class="glass p-6 flex flex-col items-center"><div class="text-4xl mb-2">🥈</div><span class="text-4xl font-900 judo-title text-slate-300" id="s-silver">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Серебро</span></div>
-            <div class="glass p-6 flex flex-col items-center"><div class="text-4xl mb-2">🥉</div><span class="text-4xl font-900 judo-title text-orange-400" id="s-bronze">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Бронза</span></div>
-            <div class="glass p-6 flex flex-col items-center"><div class="text-4xl mb-2">🏆</div><span class="text-4xl font-900 judo-title text-blue-400" id="s-total">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Всего</span></div>
+            <div class="glass p-6 flex flex-col items-center animate__animated animate__zoomIn"><div class="text-4xl mb-2">🥇</div><span class="text-4xl font-900 judo-title text-amber-400" id="s-gold">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Золото</span></div>
+            <div class="glass p-6 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.1s"><div class="text-4xl mb-2">🥈</div><span class="text-4xl font-900 judo-title text-slate-300" id="s-silver">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Серебро</span></div>
+            <div class="glass p-6 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.2s"><div class="text-4xl mb-2">🥉</div><span class="text-4xl font-900 judo-title text-orange-400" id="s-bronze">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Бронза</span></div>
+            <div class="glass p-6 flex flex-col items-center animate__animated animate__zoomIn" style="animation-delay: 0.3s"><div class="text-4xl mb-2">🏆</div><span class="text-4xl font-900 judo-title text-blue-400" id="s-total">0</span><span class="text-[9px] font-black uppercase text-slate-500 mt-1 italic tracking-widest">Всего</span></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
@@ -96,35 +97,39 @@
 
         <button onclick="openModal()" class="btn-game w-full p-6 rounded-[2rem] mb-12 flex items-center justify-center gap-4">
             <i class="fas fa-plus-circle text-2xl text-yellow-300"></i>
-            <span class="font-900 judo-title tracking-widest text-lg text-white uppercase">Внести победу</span>
+            <span class="font-900 judo-title tracking-widest text-lg text-white uppercase">Внести Шиаи</span>
         </button>
 
-        <h2 class="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-6 px-4 italic">История достижений</h2>
-        <div id="tourList" class="space-y-4 px-1 pb-10">
-            </div>
+        <h2 id="historyTitle" class="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-6 px-4 italic hidden">История достижений</h2>
+        <div id="tourList" class="space-y-4 px-1 pb-10"></div>
     </div>
 
     <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl">
         <div class="glass w-full max-w-md p-10 border-2 border-blue-500/50">
             <h3 class="text-2xl font-900 judo-title mb-8 italic text-center text-blue-400 uppercase">Новый результат</h3>
             <div class="space-y-4">
-                <input id="f-name" type="text" placeholder="Турнир" class="w-full p-4 font-bold outline-none">
+                <input id="f-name" type="text" placeholder="Название турнира" class="w-full p-4 font-bold outline-none">
                 <div class="grid grid-cols-2 gap-4">
                     <input id="f-date" type="date" class="p-4 font-bold">
                     <select id="f-country" class="p-4 font-bold">
-                        <option value="🇨🇿 Чехия">🇨🇿 Чехия</option><option value="🇩🇪 Германия">🇩🇪 Германия</option><option value="🇦🇹 Австрия">🇦🇹 Австрия</option><option value="🌍 Другая">🌍 Другая</option>
+                        <option value="🇨🇿 Чехия">🇨🇿 Чехия</option><option value="🇩🇪 Германия">🇩🇪 Германия</option><option value="🇦🇹 Австрия">🇦🇹 Австрия</option><option value="🇵🇱 Польша">🇵🇱 Польша</option><option value="🌍 Другая">🌍 Другая</option>
                     </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="f-age" class="p-4 font-bold"><option>U10</option><option>U12</option><option>U14</option><option>U16</option></select>
+                    <input id="f-weight" type="number" placeholder="Вес (кг)" class="p-4 font-bold text-center">
                 </div>
                 <select id="f-res" class="w-full p-4 font-900 text-center bg-blue-900/40 border-blue-500/30">
                     <option value="1">🥇 1 МЕСТО</option><option value="2">🥈 2 МЕСТО</option><option value="3">🥉 3 МЕСТО</option><option value="0">🥋 УЧАСТНИК</option>
                 </select>
-                <div class="grid grid-cols-2 gap-4">
-                    <input id="f-win" type="number" placeholder="Победы" class="p-4 font-bold text-center">
-                    <input id="f-loss" type="number" placeholder="Поражения" class="p-4 font-bold text-center">
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div><p class="text-[8px] font-black text-slate-500 mb-1">Победы</p><input id="f-win" type="number" value="0" class="w-full p-4 font-900 text-center text-blue-400"></div>
+                    <div><p class="text-[8px] font-black text-slate-500 mb-1">Поражения</p><input id="f-loss" type="number" value="0" class="w-full p-4 font-900 text-center text-red-400"></div>
                 </div>
+                <textarea id="f-note" placeholder="Заметки..." rows="2" class="w-full p-4 font-bold text-sm"></textarea>
             </div>
             <div class="flex gap-4 mt-8">
-                <button onclick="closeModal()" class="flex-1 font-bold text-slate-500">Отмена</button>
+                <button onclick="closeModal()" class="flex-1 font-bold text-slate-500 uppercase">Отмена</button>
                 <button onclick="save()" class="flex-[3] btn-game text-white p-4 rounded-2xl font-900 judo-title">СОХРАНИТЬ!</button>
             </div>
         </div>
@@ -133,26 +138,28 @@
     <script>
         const CLOUD_URL = "https://script.google.com/macros/s/AKfycbyTjkM75gt-kKsGTNwT5ea22ekB45-ZMwKf8v2XYmFP2jdbm_lUxaYEf7QQRpe4xZ8y/exec";
         
-        // Магия миграции данных - ищем везде
-        function getMasterDB() {
-            const keys = ['judo_master_v11', 'judo_v10_local', 'judo_champion_final_db', 'judo_kids_v7'];
-            let data = JSON.parse(localStorage.getItem('judo_master_v12_final')) || [];
-            if(data.length === 0) {
+        // Логика базы с поиском во всех старых ключах
+        function loadDB() {
+            const keys = ['judo_master_v12_final', 'judo_master_v11', 'judo_v10_local', 'judo_champion_final_db'];
+            let master = JSON.parse(localStorage.getItem('judo_master_v12_final')) || [];
+            if (master.length === 0) {
                 keys.forEach(k => {
                     const old = localStorage.getItem(k);
-                    if(old) { try { const arr = Array.isArray(JSON.parse(old)) ? JSON.parse(old) : (JSON.parse(old).db || []); data = [...data, ...arr]; } catch(e){} }
+                    if (old) { try { const arr = Array.isArray(JSON.parse(old)) ? JSON.parse(old) : (JSON.parse(old).db || []); master = [...master, ...arr]; } catch(e){} }
                 });
-                localStorage.setItem('judo_master_v12_final', JSON.stringify(data));
+                const unique = Array.from(new Map(master.map(i => [i.id || Math.random(), i])).values());
+                localStorage.setItem('judo_master_v12_final', JSON.stringify(unique));
+                return unique;
             }
-            return data;
+            return master;
         }
 
-        let db = getMasterDB();
+        let db = loadDB();
         let belt = localStorage.getItem('judo_belt_v10') || 'belt-white';
         let chartY, chartP, editId = null;
 
         function updateUI() {
-            console.log("Отрисовка списка, элементов в базе:", db.length);
+            document.getElementById('historyTitle').classList.toggle('hidden', db.length === 0);
             db.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0));
 
             const gold = db.filter(i => i.res == '1').length;
@@ -174,54 +181,41 @@
             document.getElementById('xpText').innerText = `${xp % 100} / 100 XP`;
 
             document.getElementById('beltHero').className = `w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-4xl shadow-2xl transition-all duration-700 ${belt}`;
+            const opt = document.querySelector(`#beltSelect option[value="${belt}"]`);
+            document.getElementById('rankBadge').innerText = opt ? opt.text : 'Дзюдоист';
 
-            // ОТРИСОВКА СПИСКА
-            const listContainer = document.getElementById('tourList');
-            if (db.length === 0) {
-                listContainer.innerHTML = '<div class="text-center p-10 opacity-20 italic">История пуста...</div>';
-            } else {
-                listContainer.innerHTML = db.map(t => {
-                    const dateStr = t.date ? t.date.split('-').reverse().join('.') : '00.00.00';
-                    return `
-                        <div class="glass p-6 flex justify-between items-center animate__animated animate__fadeInUp ${t.res == '1' ? 'border-l-4 border-amber-400' : ''}">
-                            <div class="flex items-center gap-4">
-                                <div class="text-4xl">${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}</div>
-                                <div>
-                                    <div class="font-900 judo-title italic text-[15px] text-white tracking-wide">${t.name || 'Турнир'}</div>
-                                    <div class="text-[9px] font-black text-slate-500 uppercase tracking-tighter mt-1">${dateStr} | ${t.country || '🌍'}</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="text-center px-3 border-r border-white/5">
-                                    <p class="text-sm font-900 text-blue-400 leading-none">${t.win || 0}</p>
-                                    <p class="text-[7px] font-black text-slate-600 uppercase">Поб.</p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button onclick="edit(${t.id})" class="ipad-btn bg-blue-500/20 text-blue-400"><i class="fas fa-edit"></i></button>
-                                    <button onclick="del(${t.id})" class="ipad-btn bg-red-500/20 text-red-400"><i class="fas fa-trash"></i></button>
+            document.getElementById('tourList').innerHTML = db.map(t => {
+                const dateArr = (t.date || "").split('-');
+                const dDisplay = dateArr.length === 3 ? `${dateArr[2]}.${dateArr[1]}.${dateArr[0]}` : '00.00.00';
+                return `
+                    <div class="glass p-6 flex justify-between items-center animate__animated animate__fadeInUp ${t.res == '1' ? 'border-l-4 border-amber-400' : ''}">
+                        <div class="flex items-center gap-4">
+                            <div class="text-4xl transform transition-transform">${t.res == '1' ? '🥇' : t.res == '2' ? '🥈' : t.res == '3' ? '🥉' : '🥋'}</div>
+                            <div>
+                                <div class="font-900 judo-title italic text-[15px] text-white leading-tight">${t.name || 'Турнир'}</div>
+                                <div class="text-[9px] font-black text-slate-500 uppercase mt-1 tracking-tighter italic">
+                                    ${dDisplay} | ${t.country || '🌍'} | ${t.age || 'U??'} | ${t.weight || '?'}кг
                                 </div>
                             </div>
                         </div>
-                    `;
-                }).join('');
-            }
+                        <div class="flex items-center gap-3">
+                            <div class="text-center px-3 border-r border-white/5"><p class="text-sm font-900 text-blue-400 leading-none">${t.win || 0}</p><p class="text-[7px] text-slate-600 font-black uppercase">Поб.</p></div>
+                            <div class="flex gap-2">
+                                <button onclick="edit(${t.id})" class="ipad-btn bg-blue-500/10 text-blue-400"><i class="fas fa-edit"></i></button>
+                                <button onclick="del(${t.id})" class="ipad-btn bg-red-500/10 text-red-400"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
 
-            // ГРАФИКИ
+            // Графики
             const yrs = {}; db.forEach(i => { const y = (i.date || "2026").split('-')[0]; yrs[y] = (yrs[y] || 0) + 1; });
             const sY = Object.keys(yrs).sort();
             if(chartY) chartY.destroy();
-            chartY = new Chart(document.getElementById('chartYear'), {
-                type: 'bar',
-                data: { labels: sY.length ? sY : ['2026'], datasets: [{ data: sY.map(y => yrs[y]), backgroundColor: '#3b82f6', borderRadius: 8, maxBarThickness: 40 }] },
-                options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1, color: '#64748b' } }, x: { grid: { display: false }, ticks: { color: '#64748b', font: { weight: 'bold' } } } } }
-            });
-
+            chartY = new Chart(document.getElementById('chartYear'), { type: 'bar', data: { labels: sY.length ? sY : ['2026'], datasets: [{ data: sY.map(y => yrs[y]), backgroundColor: '#3b82f6', borderRadius: 8, maxBarThickness: 40 }] }, options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1, color: '#64748b' } }, x: { grid: { display: false }, ticks: { color: '#64748b', font: { weight: 'bold' } } } } } });
             if(chartP) chartP.destroy();
-            chartP = new Chart(document.getElementById('chartWin'), {
-                type: 'doughnut',
-                data: { datasets: [{ data: [wins, loss || 0.1], backgroundColor: ['#3b82f6', 'rgba(255,255,255,0.05)'], borderWidth: 0, cutout: '85%' }] },
-                options: { events: [], plugins: { tooltip: { enabled: false } } }
-            });
+            chartP = new Chart(document.getElementById('chartWin'), { type: 'doughnut', data: { datasets: [{ data: [wins, loss || 0.1], backgroundColor: ['#3b82f6', 'rgba(255,255,255,0.05)'], borderWidth: 0, cutout: '85%' }] }, options: { events: [], plugins: { tooltip: { enabled: false } } } });
         }
 
         async function sync(push = false) {
@@ -246,44 +240,48 @@
                 updateUI();
             } catch (e) {
                 dot.className = "w-2 h-2 rounded-full bg-red-500";
-                txt.innerText = "Оффлайн";
+                txt.innerText = "Оффлайн режим";
                 updateUI();
             }
         }
 
         async function save() {
-            const r = document.getElementById('f-res').value;
             const item = {
                 id: editId || Date.now(),
                 name: document.getElementById('f-name').value || 'Турнир',
                 date: document.getElementById('f-date').value || new Date().toISOString().split('T')[0],
                 country: document.getElementById('f-country').value,
-                res: r, win: parseInt(document.getElementById('f-win').value) || 0,
-                loss: parseInt(document.getElementById('f-loss').value) || 0
+                age: document.getElementById('f-age').value,
+                weight: document.getElementById('f-weight').value || '0',
+                res: document.getElementById('f-res').value,
+                win: parseInt(document.getElementById('f-win').value) || 0,
+                loss: parseInt(document.getElementById('f-loss').value) || 0,
+                note: document.getElementById('f-note').value
             };
-            if(!editId && r == '1') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            if(!editId && item.res == '1') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             if(editId) { const idx = db.findIndex(i => i.id === editId); db[idx] = item; } else { db.push(item); }
             localStorage.setItem('judo_master_v12_final', JSON.stringify(db));
-            closeModal(); 
-            updateUI();
-            await sync(true);
+            closeModal(); updateUI(); await sync(true);
         }
 
         function edit(id) {
             editId = id; const t = db.find(i => i.id === id);
             document.getElementById('f-name').value = t.name; document.getElementById('f-date').value = t.date;
-            document.getElementById('f-country').value = t.country; document.getElementById('f-res').value = t.res;
+            document.getElementById('f-country').value = t.country;
+            document.getElementById('f-age').value = t.age || 'U12';
+            document.getElementById('f-weight').value = t.weight || '0';
+            document.getElementById('f-res').value = t.res;
             document.getElementById('f-win').value = t.win; document.getElementById('f-loss').value = t.loss;
+            document.getElementById('f-note').value = t.note || '';
             document.getElementById('modal').classList.remove('hidden');
         }
 
-        async function del(id) { if(confirm('Удалить?')) { db = db.filter(i => i.id !== id); localStorage.setItem('judo_master_v12_final', JSON.stringify(db)); updateUI(); await sync(true); } }
-        function openModal() { editId = null; document.getElementById('modal').classList.remove('hidden'); }
+        async function del(id) { if(confirm('Удалить этот результат?')) { db = db.filter(i => i.id !== id); localStorage.setItem('judo_master_v12_final', JSON.stringify(db)); updateUI(); await sync(true); } }
+        function openModal() { editId = null; document.getElementById('f-name').value = ''; document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
         document.getElementById('beltSelect').addEventListener('change', (e) => { belt = e.target.value; localStorage.setItem('judo_belt_v10', belt); updateUI(); });
         document.getElementById('beltSelect').value = belt;
         
-        // СТАРТ
         updateUI();
         sync();
     </script>
